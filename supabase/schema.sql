@@ -116,16 +116,7 @@ CREATE TABLE IF NOT EXISTS public.game_quizzes (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 11. GAME QUIZ QUESTIONS (Liên kết câu hỏi vào Game)
-CREATE TABLE IF NOT EXISTS public.game_quiz_questions (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    quiz_id UUID NOT NULL REFERENCES public.game_quizzes(id) ON DELETE CASCADE,
-    question_id UUID NOT NULL REFERENCES public.questions(id) ON DELETE CASCADE,
-    sort_order INTEGER NOT NULL DEFAULT 1,
-    UNIQUE(quiz_id, question_id)
-);
-
--- 12. GAME ATTEMPTS (Lịch sử & Kết quả chơi của học sinh)
+-- 11. GAME ATTEMPTS (Lịch sử & Kết quả chơi của học sinh)
 CREATE TABLE IF NOT EXISTS public.game_attempts (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     quiz_id UUID REFERENCES public.game_quizzes(id) ON DELETE CASCADE,
@@ -140,7 +131,7 @@ CREATE TABLE IF NOT EXISTS public.game_attempts (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 13. BADGES TABLE (Huy hiệu vinh danh)
+-- 12. BADGES TABLE (Huy hiệu vinh danh)
 CREATE TABLE IF NOT EXISTS public.badges (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     title TEXT NOT NULL,
@@ -158,7 +149,7 @@ CREATE TABLE IF NOT EXISTS public.user_badges (
     UNIQUE(user_id, badge_id)
 );
 
--- 14. EXPANDED GAMES SUITE (GAME-01 -> GAME-10)
+-- 13. EXPANDED GAMES SUITE (GAME-01 -> GAME-10)
 CREATE TABLE IF NOT EXISTS public.custom_games (
     id TEXT PRIMARY KEY,
     title TEXT NOT NULL,
@@ -205,7 +196,7 @@ CREATE TABLE IF NOT EXISTS public.game_ratings_feedback (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 15. ROW LEVEL SECURITY (RLS) POLICIES
+-- 14. ROW LEVEL SECURITY (RLS) POLICIES
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.classes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.chapters ENABLE ROW LEVEL SECURITY;
@@ -233,7 +224,7 @@ DO $$ BEGIN CREATE POLICY "Xem custom games công khai" ON public.custom_games F
 DO $$ BEGIN CREATE POLICY "Xem custom attempts công khai" ON public.custom_game_attempts FOR SELECT USING (true); EXCEPTION WHEN duplicate_object THEN null; END $$;
 DO $$ BEGIN CREATE POLICY "Xem game feedback công khai" ON public.game_ratings_feedback FOR SELECT USING (true); EXCEPTION WHEN duplicate_object THEN null; END $$;
 
--- 16. BƯỚC 1: NẠP 4 CHƯƠNG TRƯỚC
+-- 15. BƯỚC 1: NẠP 4 CHƯƠNG SGK VẬT LÍ 12
 INSERT INTO public.chapters (id, number, title, description, icon, color) VALUES
 ('c1111111-1111-1111-1111-111111111111', 1, 'Chủ đề 1: Vật Lí Nhiệt', 'Mô hình cấu trúc chất, nội năng, định luật 1 NĐLH, nhiệt dung riêng, nhiệt nóng chảy và nhiệt hoá hơi.', 'Flame', 'from-amber-500 to-red-500'),
 ('c2222222-2222-2222-2222-222222222222', 2, 'Chủ đề 2: Khí Lí Tưởng', 'Mô hình động học phân tử chất khí, định luật Boyle, định luật Charles, phương trình trạng thái khí lí tưởng.', 'Wind', 'from-cyan-500 to-blue-500'),
@@ -241,38 +232,38 @@ INSERT INTO public.chapters (id, number, title, description, icon, color) VALUES
 ('c4444444-4444-4444-4444-444444444444', 4, 'Chủ đề 4: Vật Lí Hạt Nhân', 'Cấu tạo hạt nhân, năng lượng liên kết, phóng xạ hạt nhân, phản ứng phân hạch, nhiệt hạch và an toàn phóng xạ.', 'Atom', 'from-emerald-500 to-teal-600')
 ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, description = EXCLUDED.description;
 
--- 17. BƯỚC 2: NẠP TOÀN BỘ CÁC BÀI HỌC (Có đầy đủ b2222222-2222-2222-2222-222222222204)
--- Chương 1
+-- 16. BƯỚC 2: NẠP CÁC BÀI HỌC VỚI SUBQUERY ĐẢM BẢO 100% KHÔNG LỖI KHÓA NGOẠI
+-- Chương 1: Vật Lí Nhiệt
 INSERT INTO public.lessons (id, chapter_id, number, title, summary, key_formulas) VALUES
-('b1111111-1111-1111-1111-111111111101', 'c1111111-1111-1111-1111-111111111111', 1, 'Bài 1: Cấu trúc của chất. Sự chuyển thể', 'Các thể của chất (rắn, lỏng, khí), mô hình động học phân tử, các quá trình chuyển thể.', '["Thể rắn: Phân tử dao động quanh VTCB"]'::jsonb),
-('b1111111-1111-1111-1111-111111111102', 'c1111111-1111-1111-1111-111111111111', 2, 'Bài 2: Nội năng. Định luật I của nhiệt động lực học', 'Khái niệm nội năng, các cách làm biến đổi nội năng (thực hiện công, truyền nhiệt), định luật I NĐLH.', '["\\Delta U = A + Q"]'::jsonb),
-('b1111111-1111-1111-1111-111111111103', 'c1111111-1111-1111-1111-111111111111', 3, 'Bài 3: Nhiệt độ. Thang nhiệt độ - nhiệt kế', 'Trạng thái cân bằng nhiệt, thang nhiệt độ Celsius và Kelvin.', '["T(K) = t(^\\circ C) + 273.15"]'::jsonb),
-('b1111111-1111-1111-1111-111111111104', 'c1111111-1111-1111-1111-111111111111', 4, 'Bài 4: Nhiệt dung riêng, nhiệt nóng chảy riêng, nhiệt hoá hơi riêng', 'Định nghĩa và công thức tính nhiệt lượng trong các quá trình truyền nhiệt và chuyển thể.', '["Q = m c \\Delta t", "Q = \\lambda m", "Q = L m"]'::jsonb)
+('b1111111-1111-1111-1111-111111111101', (SELECT id FROM public.chapters WHERE number = 1), 1, 'Bài 1: Cấu trúc của chất. Sự chuyển thể', 'Các thể của chất (rắn, lỏng, khí), mô hình động học phân tử, các quá trình chuyển thể.', '["Thể rắn: Phân tử dao động quanh VTCB"]'::jsonb),
+('b1111111-1111-1111-1111-111111111102', (SELECT id FROM public.chapters WHERE number = 1), 2, 'Bài 2: Nội năng. Định luật I của nhiệt động lực học', 'Khái niệm nội năng, các cách làm biến đổi nội năng (thực hiện công, truyền nhiệt), định luật I NĐLH.', '["\\Delta U = A + Q"]'::jsonb),
+('b1111111-1111-1111-1111-111111111103', (SELECT id FROM public.chapters WHERE number = 1), 3, 'Bài 3: Nhiệt độ. Thang nhiệt độ - nhiệt kế', 'Trạng thái cân bằng nhiệt, thang nhiệt độ Celsius và Kelvin.', '["T(K) = t(^\\circ C) + 273.15"]'::jsonb),
+('b1111111-1111-1111-1111-111111111104', (SELECT id FROM public.chapters WHERE number = 1), 4, 'Bài 4: Nhiệt dung riêng, nhiệt nóng chảy riêng, nhiệt hoá hơi riêng', 'Định nghĩa và công thức tính nhiệt lượng trong các quá trình truyền nhiệt và chuyển thể.', '["Q = m c \\Delta t", "Q = \\lambda m", "Q = L m"]'::jsonb)
 ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, summary = EXCLUDED.summary;
 
--- Chương 2
+-- Chương 2: Khí Lí Tưởng
 INSERT INTO public.lessons (id, chapter_id, number, title, summary, key_formulas) VALUES
-('b2222222-2222-2222-2222-222222222201', 'c2222222-2222-2222-2222-222222222222', 8, 'Bài 8: Mô hình động học phân tử chất khí', 'Khí lí tưởng, chuyển động Brown, va chạm đàn hồi của phân tử khí với thành bình.', '["p = \\frac{1}{3}\\mu m \\bar{v^2}"]'::jsonb),
-('b2222222-2222-2222-2222-222222222202', 'c2222222-2222-2222-2222-222222222222', 9, 'Bài 9: Định luật Boyle (Đẳng nhiệt)', 'Quá trình đẳng nhiệt của một lượng khí lí tưởng xác định.', '["p_1 V_1 = p_2 V_2"]'::jsonb),
-('b2222222-2222-2222-2222-222222222203', 'c2222222-2222-2222-2222-222222222222', 10, 'Bài 10: Định luật Charles (Đẳng áp)', 'Quá trình đẳng áp của một lượng khí lí tưởng xác định.', '["\\frac{V_1}{T_1} = \\frac{V_2}{T_2}"]'::jsonb),
-('b2222222-2222-2222-2222-222222222204', 'c2222222-2222-2222-2222-222222222222', 11, 'Bài 11: Phương trình trạng thái khí lí tưởng', 'Phương trình Clapeyron - Mendeleev và phương trình trạng thái khí lí tưởng.', '["p V = n R T"]'::jsonb)
+('b2222222-2222-2222-2222-222222222201', (SELECT id FROM public.chapters WHERE number = 2), 8, 'Bài 8: Mô hình động học phân tử chất khí', 'Khí lí tưởng, chuyển động Brown, va chạm đàn hồi của phân tử khí với thành bình.', '["p = \\frac{1}{3}\\mu m \\bar{v^2}"]'::jsonb),
+('b2222222-2222-2222-2222-222222222202', (SELECT id FROM public.chapters WHERE number = 2), 9, 'Bài 9: Định luật Boyle (Đẳng nhiệt)', 'Quá trình đẳng nhiệt của một lượng khí lí tưởng xác định.', '["p_1 V_1 = p_2 V_2"]'::jsonb),
+('b2222222-2222-2222-2222-222222222203', (SELECT id FROM public.chapters WHERE number = 2), 10, 'Bài 10: Định luật Charles (Đẳng áp)', 'Quá trình đẳng áp của một lượng khí lí tưởng xác định.', '["\\frac{V_1}{T_1} = \\frac{V_2}{T_2}"]'::jsonb),
+('b2222222-2222-2222-2222-222222222204', (SELECT id FROM public.chapters WHERE number = 2), 11, 'Bài 11: Phương trình trạng thái khí lí tưởng', 'Phương trình Clapeyron - Mendeleev và phương trình trạng thái khí lí tưởng.', '["p V = n R T"]'::jsonb)
 ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, summary = EXCLUDED.summary;
 
--- Chương 3
+-- Chương 3: Từ Trường
 INSERT INTO public.lessons (id, chapter_id, number, title, summary, key_formulas) VALUES
-('b3333333-3333-3333-3333-333333333301', 'c3333333-3333-3333-3333-333333333333', 14, 'Bài 14: Từ trường', 'Từ trường của các dòng điện có dạng đặc biệt, đường sức từ, từ phổ.', '["Vào Nam ra Bắc"]'::jsonb),
-('b3333333-3333-3333-3333-333333333302', 'c3333333-3333-3333-3333-333333333333', 15, 'Bài 15: Lực từ. Cảm ứng từ', 'Lực từ tác dụng lên đoạn dây dẫn mang dòng điện, quy tắc bàn tay trái.', '["F = B I L \\sin\\alpha"]'::jsonb),
-('b3333333-3333-3333-3333-333333333303', 'c3333333-3333-3333-3333-333333333333', 16, 'Bài 16: Hiện tượng cảm ứng điện từ', 'Từ thông, định luật Faraday về cảm ứng điện từ, định luật Lenz.', '["e_c = -\\frac{\\Delta\\Phi}{\\Delta t}"]'::jsonb)
+('b3333333-3333-3333-3333-333333333301', (SELECT id FROM public.chapters WHERE number = 3), 14, 'Bài 14: Từ trường', 'Từ trường của các dòng điện có dạng đặc biệt, đường sức từ, từ phổ.', '["Vào Nam ra Bắc"]'::jsonb),
+('b3333333-3333-3333-3333-333333333302', (SELECT id FROM public.chapters WHERE number = 3), 15, 'Bài 15: Lực từ. Cảm ứng từ', 'Lực từ tác dụng lên đoạn dây dẫn mang dòng điện, quy tắc bàn tay trái.', '["F = B I L \\sin\\alpha"]'::jsonb),
+('b3333333-3333-3333-3333-333333333303', (SELECT id FROM public.chapters WHERE number = 3), 16, 'Bài 16: Hiện tượng cảm ứng điện từ', 'Từ thông, định luật Faraday về cảm ứng điện từ, định luật Lenz.', '["e_c = -\\frac{\\Delta\\Phi}{\\Delta t}"]'::jsonb)
 ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, summary = EXCLUDED.summary;
 
--- Chương 4
+-- Chương 4: Vật Lí Hạt Nhân
 INSERT INTO public.lessons (id, chapter_id, number, title, summary, key_formulas) VALUES
-('b4444444-4444-4444-4444-444444444401', 'c4444444-4444-4444-4444-444444444444', 19, 'Bài 19: Cấu tạo hạt nhân. Năng lượng liên kết', 'Proton, neutron, độ hụt khối, năng lượng liên kết riêng quyết định độ bền vững.', '["E = m c^2", "W_{lkr} = \\frac{W_{lk}}{A}"]'::jsonb),
-('b4444444-4444-4444-4444-444444444402', 'c4444444-4444-4444-4444-444444444444', 20, 'Bài 20: Phóng xạ', 'Định luật phóng xạ, tia phóng xạ alpha, beta, gamma, chu kì bán rã.', '["N(t) = N_0 2^{-\\frac{t}{T}}"]'::jsonb)
+('b4444444-4444-4444-4444-444444444401', (SELECT id FROM public.chapters WHERE number = 4), 19, 'Bài 19: Cấu tạo hạt nhân. Năng lượng liên kết', 'Proton, neutron, độ hụt khối, năng lượng liên kết riêng quyết định độ bền vững.', '["E = m c^2", "W_{lkr} = \\frac{W_{lk}}{A}"]'::jsonb),
+('b4444444-4444-4444-4444-444444444402', (SELECT id FROM public.chapters WHERE number = 4), 20, 'Bài 20: Phóng xạ', 'Định luật phóng xạ, tia phóng xạ alpha, beta, gamma, chu kì bán rã.', '["N(t) = N_0 2^{-\\frac{t}{T}}"]'::jsonb)
 ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, summary = EXCLUDED.summary;
 
--- 18. BƯỚC 3: NẠP 16 CÂU HỎI 4 CHỦ ĐỀ CHUẨN ĐỘ KHÓ
-DELETE FROM public.questions WHERE lesson_id::text LIKE 'b%';
+-- 17. BƯỚC 3: NẠP 16 CÂU HỎI 4 CHỦ ĐỀ
+DELETE FROM public.questions WHERE lesson_id IS NOT NULL;
 
 -- Chủ đề 1: Vật Lí Nhiệt
 INSERT INTO public.questions (lesson_id, type, content, options, correct_answer, explanation, difficulty) VALUES
