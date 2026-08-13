@@ -70,15 +70,15 @@ export const UploadMaterialModal: React.FC<UploadMaterialModalProps> = ({
     <Modal isOpen={isOpen} onClose={onClose} title="Tải Lên Học Liệu Vật Lí Mới">
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0" />
+          <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
             <span>{error}</span>
           </div>
         )}
 
         {/* Title */}
         <div className="space-y-1">
-          <label className="block text-xs font-bold text-slate-300 uppercase">
+          <label className="block text-xs font-bold text-slate-700 uppercase">
             Tiêu đề học liệu *
           </label>
           <input
@@ -87,20 +87,20 @@ export const UploadMaterialModal: React.FC<UploadMaterialModalProps> = ({
             placeholder="VD: Sơ đồ tư duy Định luật bảo toàn năng lượng & Định luật 1"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+            className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"
           />
         </div>
 
         {/* Lesson & Type selection */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="space-y-1">
-            <label className="block text-xs font-bold text-slate-300 uppercase">
+            <label className="block text-xs font-bold text-slate-700 uppercase">
               Bài học liên quan
             </label>
             <select
               value={lessonId}
               onChange={(e) => setLessonId(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 focus:outline-none focus:border-cyan-500"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"
             >
               <option value="">-- Dành cho toàn bộ môn học --</option>
               {lessons.map((ls) => (
@@ -112,13 +112,13 @@ export const UploadMaterialModal: React.FC<UploadMaterialModalProps> = ({
           </div>
 
           <div className="space-y-1">
-            <label className="block text-xs font-bold text-slate-300 uppercase">
+            <label className="block text-xs font-bold text-slate-700 uppercase">
               Định dạng học liệu
             </label>
             <select
               value={type}
               onChange={(e) => setType(e.target.value as MaterialType)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 focus:outline-none focus:border-cyan-500"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"
             >
               <option value="pdf">Tài liệu PDF / Tóm tắt</option>
               <option value="slide">Slide Bài Giảng Trình Chiếu</option>
@@ -130,9 +130,9 @@ export const UploadMaterialModal: React.FC<UploadMaterialModalProps> = ({
 
         {/* File URL or PhET simulation link */}
         <div className="space-y-1">
-          <label className="block text-xs font-bold text-slate-300 uppercase flex items-center justify-between">
+          <label className="block text-xs font-bold text-slate-700 uppercase flex items-center justify-between">
             <span>Đường dẫn File / Link Mô phỏng Thí nghiệm *</span>
-            <span className="text-[11px] text-cyan-400 font-normal">Hỗ trợ link PhET, Google Drive, PDF online</span>
+            <span className="text-[11px] text-sky-700 font-medium">Hỗ trợ link PhET, Drive, PDF online</span>
           </label>
           <div className="relative">
             <input
@@ -141,15 +141,15 @@ export const UploadMaterialModal: React.FC<UploadMaterialModalProps> = ({
               placeholder="https://..."
               value={fileUrl}
               onChange={(e) => setFileUrl(e.target.value)}
-              className="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono"
+              className="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 font-mono"
             />
-            <LinkIcon className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+            <LinkIcon className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
           </div>
         </div>
 
         {/* Description */}
         <div className="space-y-1">
-          <label className="block text-xs font-bold text-slate-300 uppercase">
+          <label className="block text-xs font-bold text-slate-700 uppercase">
             Mô tả ngắn gọn & Hướng dẫn học sinh
           </label>
           <textarea
@@ -157,7 +157,7 @@ export const UploadMaterialModal: React.FC<UploadMaterialModalProps> = ({
             placeholder="VD: Học sinh xem video mô phỏng trước khi tham gia trò chơi nối từ định luật Boyle..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 resize-none"
+            className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 resize-none"
           />
         </div>
 
@@ -166,14 +166,14 @@ export const UploadMaterialModal: React.FC<UploadMaterialModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white bg-slate-800 transition"
+            className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 transition"
           >
             Hủy bỏ
           </button>
           <button
             type="submit"
             disabled={isUploading}
-            className="px-6 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/20 transition flex items-center gap-2"
+            className="px-6 py-2.5 rounded-xl text-xs font-bold bg-sky-600 hover:bg-sky-500 text-white shadow-sm transition flex items-center gap-2 active:scale-95"
           >
             <Upload className="w-4 h-4" />
             <span>{isUploading ? 'Đang lưu...' : 'Lưu Học Liệu'}</span>
@@ -183,3 +183,4 @@ export const UploadMaterialModal: React.FC<UploadMaterialModalProps> = ({
     </Modal>
   );
 };
+

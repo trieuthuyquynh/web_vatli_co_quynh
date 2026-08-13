@@ -18,13 +18,13 @@ export const LeaderboardPage: React.FC = () => {
     <div className="space-y-10 pb-16 max-w-4xl mx-auto">
       {/* Banner */}
       <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-300 border border-amber-500/30">
-          <Trophy className="w-4 h-4 text-amber-400" /> Bảng Vinh Danh Vật Lí 12 KNTT
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black bg-amber-50 text-amber-800 border border-amber-200">
+          <Trophy className="w-4 h-4 text-amber-600" /> Bảng Vinh Danh Vật Lí 12 KNTT
         </div>
-        <h1 className="text-3xl sm:text-5xl font-black text-white">
+        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
           Bảng Xếp Hạng Toàn Hệ Thống
         </h1>
-        <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto">
+        <p className="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto">
           Tích lũy điểm kinh nghiệm (XP) qua mỗi lượt giải trắc nghiệm, đúng sai và nối từ để thăng hạng và giành cúp vinh dự.
         </p>
       </div>
@@ -39,65 +39,65 @@ export const LeaderboardPage: React.FC = () => {
             <div className="grid grid-cols-3 gap-3 sm:gap-6 items-end pt-8 pb-4">
               
               {/* Rank 2 (Bạc) */}
-              <div className="p-4 rounded-2xl bg-gradient-to-b from-slate-800/80 to-slate-900 border border-slate-700 text-center space-y-2 order-1 shadow-lg">
+              <div className="p-4 sm:p-5 rounded-3xl bg-white border border-slate-200 text-center space-y-2 order-1 shadow-soft">
                 <div className="relative inline-block">
                   <img
                     src={leaders[1]?.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${leaders[1]?.full_name}`}
                     alt={leaders[1]?.full_name}
-                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full mx-auto border-2 border-slate-400 object-cover"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full mx-auto border-2 border-slate-300 object-cover"
                   />
-                  <span className="absolute -bottom-2 inset-x-0 mx-auto w-6 h-6 rounded-full bg-slate-300 text-slate-950 font-black text-xs flex items-center justify-center">
+                  <span className="absolute -bottom-2 inset-x-0 mx-auto w-6 h-6 rounded-full bg-slate-200 text-slate-800 font-black text-xs flex items-center justify-center border border-slate-300 shadow-xs">
                     2
                   </span>
                 </div>
                 <div className="pt-2">
-                  <h4 className="font-bold text-white text-xs sm:text-sm truncate">{leaders[1]?.full_name}</h4>
-                  <p className="text-[10px] text-slate-400 truncate">{leaders[1]?.school || 'THPT'}</p>
+                  <h4 className="font-bold text-slate-900 text-xs sm:text-sm truncate">{leaders[1]?.full_name}</h4>
+                  <p className="text-[10px] text-slate-500 truncate">{leaders[1]?.school || 'THPT'}</p>
                 </div>
-                <div className="text-cyan-400 font-extrabold text-xs sm:text-sm">
+                <div className="text-sky-700 font-black text-xs sm:text-sm">
                   {leaders[1]?.xp} XP
                 </div>
               </div>
 
               {/* Rank 1 (Vàng - Cao nhất) */}
-              <div className="p-5 rounded-3xl bg-gradient-to-b from-amber-500/20 via-slate-900 to-slate-900 border-2 border-amber-500/60 text-center space-y-3 order-2 shadow-2xl shadow-amber-500/10 -translate-y-4">
-                <Crown className="w-8 h-8 text-amber-400 mx-auto animate-bounce" />
+              <div className="p-5 sm:p-6 rounded-3xl bg-white border-2 border-amber-400 text-center space-y-3 order-2 shadow-card-hover -translate-y-4">
+                <Crown className="w-8 h-8 text-amber-500 mx-auto animate-bounce" />
                 <div className="relative inline-block">
                   <img
                     src={leaders[0]?.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${leaders[0]?.full_name}`}
                     alt={leaders[0]?.full_name}
-                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto border-4 border-amber-400 object-cover"
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto border-4 border-amber-400 object-cover shadow-sm"
                   />
-                  <span className="absolute -bottom-2 inset-x-0 mx-auto w-7 h-7 rounded-full bg-amber-400 text-slate-950 font-black text-xs flex items-center justify-center shadow">
+                  <span className="absolute -bottom-2 inset-x-0 mx-auto w-7 h-7 rounded-full bg-amber-400 text-slate-950 font-black text-xs flex items-center justify-center shadow-xs">
                     1
                   </span>
                 </div>
                 <div className="pt-1">
-                  <h4 className="font-extrabold text-amber-300 text-sm sm:text-base truncate">{leaders[0]?.full_name}</h4>
-                  <p className="text-[11px] text-slate-400 truncate">{leaders[0]?.school || 'THPT'}</p>
+                  <h4 className="font-extrabold text-amber-800 text-sm sm:text-base truncate">{leaders[0]?.full_name}</h4>
+                  <p className="text-[11px] text-slate-500 truncate">{leaders[0]?.school || 'THPT'}</p>
                 </div>
-                <div className="text-amber-400 font-black text-sm sm:text-base">
+                <div className="text-amber-600 font-black text-sm sm:text-base">
                   {leaders[0]?.xp} XP
                 </div>
               </div>
 
               {/* Rank 3 (Đồng) */}
-              <div className="p-4 rounded-2xl bg-gradient-to-b from-slate-800/80 to-slate-900 border border-slate-700 text-center space-y-2 order-3 shadow-lg">
+              <div className="p-4 sm:p-5 rounded-3xl bg-white border border-slate-200 text-center space-y-2 order-3 shadow-soft">
                 <div className="relative inline-block">
                   <img
                     src={leaders[2]?.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${leaders[2]?.full_name}`}
                     alt={leaders[2]?.full_name}
-                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full mx-auto border-2 border-amber-700 object-cover"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full mx-auto border-2 border-amber-700/50 object-cover"
                   />
-                  <span className="absolute -bottom-2 inset-x-0 mx-auto w-6 h-6 rounded-full bg-amber-700 text-white font-black text-xs flex items-center justify-center">
+                  <span className="absolute -bottom-2 inset-x-0 mx-auto w-6 h-6 rounded-full bg-amber-800 text-white font-black text-xs flex items-center justify-center shadow-xs">
                     3
                   </span>
                 </div>
                 <div className="pt-2">
-                  <h4 className="font-bold text-white text-xs sm:text-sm truncate">{leaders[2]?.full_name}</h4>
-                  <p className="text-[10px] text-slate-400 truncate">{leaders[2]?.school || 'THPT'}</p>
+                  <h4 className="font-bold text-slate-900 text-xs sm:text-sm truncate">{leaders[2]?.full_name}</h4>
+                  <p className="text-[10px] text-slate-500 truncate">{leaders[2]?.school || 'THPT'}</p>
                 </div>
-                <div className="text-cyan-400 font-extrabold text-xs sm:text-sm">
+                <div className="text-sky-700 font-black text-xs sm:text-sm">
                   {leaders[2]?.xp} XP
                 </div>
               </div>
@@ -106,9 +106,9 @@ export const LeaderboardPage: React.FC = () => {
           )}
 
           {/* Full List Table */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/90 overflow-hidden shadow-xl">
+          <div className="rounded-3xl border border-slate-200 bg-white overflow-hidden shadow-soft">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-950/80 border-b border-slate-800 text-slate-400 uppercase font-bold text-[11px]">
+              <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 uppercase font-bold text-[11px]">
                 <tr>
                   <th className="px-5 py-3.5 text-center w-16">Hạng</th>
                   <th className="px-5 py-3.5">Học Sinh</th>
@@ -117,9 +117,9 @@ export const LeaderboardPage: React.FC = () => {
                   <th className="px-5 py-3.5 text-right">Tổng XP</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/80 text-slate-200">
+              <tbody className="divide-y divide-slate-100 text-slate-700">
                 {leaders.map((u, index) => (
-                  <tr key={u.id || index} className="hover:bg-slate-800/40 transition">
+                  <tr key={u.id || index} className="hover:bg-slate-50/70 transition">
                     <td className="px-5 py-3.5 text-center font-black">
                       {index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`}
                     </td>
@@ -127,22 +127,22 @@ export const LeaderboardPage: React.FC = () => {
                       <img
                         src={u.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${u.full_name}`}
                         alt={u.full_name}
-                        className="w-8 h-8 rounded-full border border-cyan-500/30"
+                        className="w-8 h-8 rounded-full border border-sky-200"
                       />
-                      <span className="font-bold text-white text-sm">{u.full_name}</span>
+                      <span className="font-bold text-slate-900 text-sm">{u.full_name}</span>
                     </td>
-                    <td className="px-5 py-3.5 text-slate-400 hidden sm:table-cell">
+                    <td className="px-5 py-3.5 text-slate-500 hidden sm:table-cell">
                       {u.school || 'THPT Kết Nối Tri Thức'}
                     </td>
                     <td className="px-5 py-3.5 text-center">
-                      <span className="inline-flex items-center gap-1 text-amber-400 font-bold">
-                        <Flame className="w-3.5 h-3.5 fill-amber-400" />
+                      <span className="inline-flex items-center gap-1 text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 text-[11px]">
+                        <Flame className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
                         {u.streak || 1} ngày
                       </span>
                     </td>
                     <td className="px-5 py-3.5 text-right">
-                      <span className="inline-flex items-center gap-1 text-cyan-400 font-black text-sm">
-                        <Zap className="w-3.5 h-3.5 fill-cyan-400" />
+                      <span className="inline-flex items-center gap-1 text-sky-700 font-black text-sm">
+                        <Zap className="w-3.5 h-3.5 fill-sky-600 text-sky-600" />
                         {u.xp || 0} XP
                       </span>
                     </td>
@@ -157,3 +157,4 @@ export const LeaderboardPage: React.FC = () => {
     </div>
   );
 };
+

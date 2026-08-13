@@ -4,34 +4,36 @@
 
 @layer base {
   body {
-    @apply bg-[#0B0F19] text-slate-100 antialiased font-sans selection:bg-cyan-500 selection:text-white;
+    @apply bg-slate-50 text-slate-800 antialiased font-sans selection:bg-sky-500 selection:text-white;
   }
 }
 
-/* Custom scrollbars */
+/* Custom modern scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0B0F19;
+  background: #F1F5F9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1E293B;
-  border-radius: 4px;
+  background: #CBD5E1;
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #06B6D4;
+  background: #94A3B8;
 }
 
-/* KaTeX custom sizing in physics lab context */
+/* KaTeX custom sizing in academic physics context */
 .katex {
   font-size: 1.05em !important;
+  color: #0F172A !important;
 }
 
 .katex-display {
   margin: 0.5em 0 !important;
 }
+

@@ -114,33 +114,33 @@ export const TrueFalseGame: React.FC<TrueFalseGameProps> = ({
       {/* Top Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+          <span className="px-3 py-1 rounded-full text-xs font-black bg-amber-50 text-amber-800 border border-amber-200">
             Dạng Đúng/Sai: Câu {questionIndex + 1} / {totalQuestions}
           </span>
-          <span className="text-[11px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">
-            Chuẩn Đề Thi Tốt Nghiệp THPT 2025
+          <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-200">
+            Chuẩn Cấu Trúc Thi Tốt Nghiệp THPT
           </span>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="w-32 sm:w-48 h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div className="w-32 sm:w-48 h-2.5 bg-slate-200 rounded-full overflow-hidden">
             <div
               className={`h-full transition-all duration-1000 ${
-                timerPercentage > 40 ? 'bg-amber-400' : 'bg-rose-500'
+                timerPercentage > 40 ? 'bg-amber-500' : 'bg-rose-500'
               }`}
               style={{ width: `${timerPercentage}%` }}
             />
           </div>
-          <div className="flex items-center gap-1 text-xs font-bold text-slate-300">
-            <Clock className="w-3.5 h-3.5 text-amber-400" />
+          <div className="flex items-center gap-1 text-xs font-bold text-slate-700">
+            <Clock className="w-3.5 h-3.5 text-amber-600" />
             <span>{timeLeft}s</span>
           </div>
         </div>
       </div>
 
       {/* Context / Question Lead */}
-      <div className="p-6 rounded-2xl bg-gradient-to-b from-slate-800/90 to-slate-900/90 border border-slate-700 shadow-xl">
-        <div className="text-base sm:text-lg font-medium text-slate-100 leading-relaxed">
+      <div className="p-6 sm:p-7 rounded-3xl bg-white border border-slate-200/90 shadow-soft">
+        <div className="text-base sm:text-lg font-semibold text-slate-900 leading-relaxed">
           <MathRenderer content={question.content} />
         </div>
       </div>
@@ -156,16 +156,16 @@ export const TrueFalseGame: React.FC<TrueFalseGameProps> = ({
           return (
             <div
               key={st.id || index}
-              className={`p-4 rounded-xl border transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+              className={`p-4 rounded-2xl border transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
                 isSubmitted
                   ? isUserRight
-                    ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-100'
-                    : 'bg-rose-500/10 border-rose-500/40 text-rose-100'
-                  : 'bg-slate-900/80 border-slate-800 hover:border-slate-700 text-slate-200'
+                    ? 'bg-emerald-50/80 border-emerald-300 text-emerald-950'
+                    : 'bg-rose-50/80 border-rose-300 text-rose-950'
+                  : 'bg-white border-slate-200 hover:border-slate-300 text-slate-800 shadow-xs'
               }`}
             >
               <div className="flex items-start gap-3 flex-1">
-                <span className="w-7 h-7 rounded-lg bg-slate-800 text-cyan-400 border border-slate-700 flex items-center justify-center font-bold text-sm shrink-0">
+                <span className="w-7 h-7 rounded-xl bg-slate-100 text-sky-700 border border-slate-200 flex items-center justify-center font-bold text-sm shrink-0">
                   {letter})
                 </span>
                 <div className="text-sm font-medium pt-0.5 leading-relaxed">
@@ -179,14 +179,14 @@ export const TrueFalseGame: React.FC<TrueFalseGameProps> = ({
                   type="button"
                   onClick={() => handleSelect(index, true)}
                   disabled={isSubmitted}
-                  className={`flex items-center gap-1.5 px-4 py-2 rounded-lg font-bold text-xs transition ${
+                  className={`flex items-center gap-1.5 px-4 py-2 rounded-xl font-bold text-xs transition active:scale-95 ${
                     currentChoice === true
                       ? isSubmitted
                         ? actualCorrect === true
-                          ? 'bg-emerald-500 text-white'
-                          : 'bg-rose-500 text-white'
-                        : 'bg-cyan-500 text-white shadow-md shadow-cyan-500/20'
-                      : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white border border-slate-700'
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-rose-600 text-white'
+                        : 'bg-sky-600 text-white shadow-sm'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 border border-slate-200'
                   }`}
                 >
                   <Check className="w-3.5 h-3.5" />
@@ -197,14 +197,14 @@ export const TrueFalseGame: React.FC<TrueFalseGameProps> = ({
                   type="button"
                   onClick={() => handleSelect(index, false)}
                   disabled={isSubmitted}
-                  className={`flex items-center gap-1.5 px-4 py-2 rounded-lg font-bold text-xs transition ${
+                  className={`flex items-center gap-1.5 px-4 py-2 rounded-xl font-bold text-xs transition active:scale-95 ${
                     currentChoice === false
                       ? isSubmitted
                         ? actualCorrect === false
-                          ? 'bg-emerald-500 text-white'
-                          : 'bg-rose-500 text-white'
-                        : 'bg-rose-500 text-white shadow-md shadow-rose-500/20'
-                      : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white border border-slate-700'
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-rose-600 text-white'
+                        : 'bg-rose-600 text-white shadow-sm'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 border border-slate-200'
                   }`}
                 >
                   <X className="w-3.5 h-3.5" />
@@ -222,10 +222,10 @@ export const TrueFalseGame: React.FC<TrueFalseGameProps> = ({
           <button
             onClick={handleSubmit}
             disabled={!allSelected}
-            className={`px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 transition ${
+            className={`px-6 py-3 rounded-2xl font-extrabold text-sm flex items-center gap-2 transition ${
               allSelected
-                ? 'bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white shadow-lg shadow-amber-500/20 cursor-pointer'
-                : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                ? 'bg-amber-600 hover:bg-amber-500 text-white shadow-md shadow-amber-600/20 cursor-pointer active:scale-95'
+                : 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed'
             }`}
           >
             <span>{allSelected ? 'Xác nhận Nộp Bài' : 'Vui lòng chọn Đúng/Sai cho cả 4 ý'}</span>
@@ -233,45 +233,47 @@ export const TrueFalseGame: React.FC<TrueFalseGameProps> = ({
         </div>
       ) : (
         <div className="space-y-4 pt-2 animate-in fade-in slide-in-from-bottom-3 duration-300">
-          <div className="p-4 rounded-xl bg-slate-900 border border-slate-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-soft flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
-              <div className="font-bold text-sm text-slate-100 flex items-center gap-2">
+              <div className="font-bold text-sm text-slate-900 flex items-center gap-2">
                 {correctCount === statements.length ? (
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
                 ) : (
-                  <XCircle className="w-5 h-5 text-amber-400" />
+                  <XCircle className="w-5 h-5 text-amber-600" />
                 )}
                 <span>
                   Bạn trả lời đúng {correctCount}/4 ý (Đạt {score}/1.0 điểm chuẩn THPT)
                 </span>
               </div>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-500 mt-0.5">
                 Nhận được +{Math.round(score * 100)} XP kinh nghiệm
               </p>
             </div>
 
             <button
               onClick={() => setShowExplanation(!showExplanation)}
-              className="flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition"
+              className="flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition"
             >
-              <Lightbulb className="w-3.5 h-3.5 text-amber-400" />
+              <Lightbulb className="w-3.5 h-3.5 text-amber-500" />
               {showExplanation ? 'Ẩn lời giải' : 'Xem phân tích chi tiết'}
             </button>
           </div>
 
           {showExplanation && question.explanation && (
-            <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-slate-300 space-y-1">
-              <div className="font-bold text-amber-400 flex items-center gap-1.5 mb-1">
-                <Lightbulb className="w-4 h-4" /> Phân tích từng nhận định theo SGK:
+            <div className="p-5 rounded-2xl bg-white border border-amber-200 shadow-soft text-xs text-slate-700 space-y-1.5">
+              <div className="font-extrabold text-amber-800 flex items-center gap-1.5 mb-1">
+                <Lightbulb className="w-4 h-4 text-amber-600" /> Phân tích từng nhận định theo SGK:
               </div>
-              <MathRenderer content={question.explanation} block />
+              <div className="font-medium leading-relaxed">
+                <MathRenderer content={question.explanation} block />
+              </div>
             </div>
           )}
 
           <div className="flex justify-end">
             <button
               onClick={handleNext}
-              className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white shadow-lg shadow-amber-500/25 transition active:scale-95"
+              className="flex items-center gap-2 px-6 py-3 rounded-2xl font-extrabold text-sm bg-amber-600 hover:bg-amber-500 text-white shadow-md shadow-amber-600/20 transition active:scale-95"
             >
               <span>{questionIndex + 1 === totalQuestions ? 'Xem Tổng Kết' : 'Câu Tiếp Theo'}</span>
               <ArrowRight className="w-4 h-4" />
@@ -282,3 +284,4 @@ export const TrueFalseGame: React.FC<TrueFalseGameProps> = ({
     </div>
   );
 };
+

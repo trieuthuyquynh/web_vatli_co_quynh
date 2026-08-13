@@ -43,18 +43,18 @@ export const GameResultScreen: React.FC<GameResultScreenProps> = ({
   };
 
   return (
-    <div className="max-w-xl mx-auto p-8 rounded-3xl bg-gradient-to-b from-slate-800/90 to-slate-900/95 border border-slate-700 shadow-2xl text-center space-y-6 animate-in zoom-in-95 duration-300">
+    <div className="max-w-xl mx-auto p-8 sm:p-10 rounded-3xl bg-white border border-slate-200/90 shadow-soft text-center space-y-6 animate-in zoom-in-95 duration-300">
       {/* Trophy Icon */}
       <div className="relative inline-block">
-        <div className={`w-24 h-24 mx-auto rounded-3xl flex items-center justify-center shadow-xl ${
+        <div className={`w-24 h-24 mx-auto rounded-3xl flex items-center justify-center shadow-lg ${
           isGreat
-            ? 'bg-gradient-to-tr from-amber-400 to-yellow-500 shadow-amber-500/30'
-            : 'bg-gradient-to-tr from-cyan-500 to-blue-600 shadow-cyan-500/30'
+            ? 'bg-gradient-to-tr from-amber-400 to-yellow-500 shadow-amber-500/20'
+            : 'bg-gradient-to-tr from-sky-500 to-blue-600 shadow-sky-500/20'
         }`}>
-          <Trophy className="w-12 h-12 text-slate-950 animate-bounce" />
+          <Trophy className="w-12 h-12 text-white animate-bounce" />
         </div>
         <div className="absolute -bottom-2 inset-x-0 flex justify-center">
-          <span className="px-3 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-slate-900 border border-slate-700 text-cyan-300">
+          <span className="px-3.5 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-white border border-slate-200 text-sky-800 shadow-xs">
             {isGreat ? 'Xuất Sắc!' : 'Hoàn Thành!'}
           </span>
         </div>
@@ -62,64 +62,64 @@ export const GameResultScreen: React.FC<GameResultScreenProps> = ({
 
       {/* Main Score Headline */}
       <div className="space-y-1 pt-2">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+        <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
           {score.toFixed(1)} / 10 Điểm
         </h2>
-        <p className="text-sm text-slate-400">
+        <p className="text-xs sm:text-sm text-slate-600">
           Chính xác {correctCount} trên tổng số {totalQuestions} câu hỏi ({percentage}%)
         </p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-slate-950/60 border border-slate-800">
+      <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200">
         <div className="space-y-1">
-          <div className="flex items-center justify-center gap-1 text-cyan-400 text-xs font-semibold">
-            <Zap className="w-3.5 h-3.5 fill-cyan-400" />
+          <div className="flex items-center justify-center gap-1 text-sky-700 text-xs font-bold">
+            <Zap className="w-3.5 h-3.5 fill-sky-600" />
             <span>Kinh nghiệm</span>
           </div>
-          <div className="text-xl font-black text-white tracking-tight">+{xpEarned} XP</div>
+          <div className="text-xl font-black text-slate-900 tracking-tight">+{xpEarned} XP</div>
         </div>
 
-        <div className="space-y-1 border-x border-slate-800">
-          <div className="flex items-center justify-center gap-1 text-emerald-400 text-xs font-semibold">
+        <div className="space-y-1 border-x border-slate-200">
+          <div className="flex items-center justify-center gap-1 text-emerald-700 text-xs font-bold">
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>Đúng</span>
           </div>
-          <div className="text-xl font-black text-white tracking-tight">{correctCount}/{totalQuestions}</div>
+          <div className="text-xl font-black text-slate-900 tracking-tight">{correctCount}/{totalQuestions}</div>
         </div>
 
         <div className="space-y-1">
-          <div className="flex items-center justify-center gap-1 text-amber-400 text-xs font-semibold">
+          <div className="flex items-center justify-center gap-1 text-amber-700 text-xs font-bold">
             <Clock className="w-3.5 h-3.5" />
             <span>Thời gian</span>
           </div>
-          <div className="text-xl font-black text-white tracking-tight">{formatTime(totalTimeSpent)}</div>
+          <div className="text-xl font-black text-slate-900 tracking-tight">{formatTime(totalTimeSpent)}</div>
         </div>
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
         <button
           onClick={onRestart}
-          className="w-full sm:flex-1 py-3 px-4 rounded-xl font-bold text-sm bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 transition active:scale-95"
+          className="w-full sm:w-auto px-6 py-3 rounded-2xl font-bold text-xs bg-sky-600 hover:bg-sky-500 text-white shadow-md shadow-sky-600/20 transition flex items-center justify-center gap-2 active:scale-95"
         >
           <RotateCcw className="w-4 h-4" />
-          <span>Chơi Lại Bài Này</span>
+          <span>Luyện Lại Bài Này</span>
         </button>
 
         <Link
           to="/games"
-          className="w-full sm:flex-1 py-3 px-4 rounded-xl font-bold text-sm bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center justify-center gap-2 transition"
+          className="w-full sm:w-auto px-6 py-3 rounded-2xl font-bold text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition flex items-center justify-center gap-2"
         >
-          <Home className="w-4 h-4 text-cyan-400" />
-          <span>Đấu Trường Game</span>
+          <Home className="w-4 h-4" />
+          <span>Về Đấu Trường Game</span>
         </Link>
       </div>
 
       <div className="pt-2">
         <Link
           to="/leaderboard"
-          className="inline-flex items-center gap-1.5 text-xs text-amber-400 hover:text-amber-300 transition underline underline-offset-4"
+          className="inline-flex items-center gap-1.5 text-xs text-amber-600 hover:text-amber-500 transition underline underline-offset-4"
         >
           <Award className="w-3.5 h-3.5" /> Xem bảng xếp hạng toàn quốc
         </Link>

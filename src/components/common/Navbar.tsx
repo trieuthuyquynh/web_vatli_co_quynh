@@ -17,7 +17,8 @@ import {
   X, 
   ShieldCheck, 
   GraduationCap, 
-  School
+  School,
+  ChevronDown
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
@@ -44,45 +45,45 @@ export const Navbar: React.FC = () => {
     switch (role) {
       case 'admin':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30">
-            <ShieldCheck className="w-3.5 h-3.5" /> Admin
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+            <ShieldCheck className="w-3.5 h-3.5 text-rose-600" /> Admin
           </span>
         );
       case 'teacher':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-            <GraduationCap className="w-3.5 h-3.5" /> Giáo Viên
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-200">
+            <GraduationCap className="w-3.5 h-3.5 text-sky-600" /> Giáo Viên
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-            <School className="w-3.5 h-3.5" /> Học Sinh
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+            <School className="w-3.5 h-3.5 text-amber-600" /> Học Sinh
           </span>
         );
     }
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-[#0B0F19]/90 backdrop-blur-xl transition-all">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-200/90 bg-white/95 backdrop-blur-md shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
           {/* Logo & Brand */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-300">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 via-blue-600 to-indigo-600 flex items-center justify-center shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform duration-300">
               <Atom className="w-6 h-6 text-white animate-spin-slow" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-base tracking-tight bg-gradient-to-r from-cyan-400 via-blue-300 to-indigo-300 bg-clip-text text-transparent">
+                <span className="font-extrabold text-base tracking-tight bg-gradient-to-r from-sky-600 via-blue-700 to-indigo-800 bg-clip-text text-transparent">
                   VẬT LÍ 12
                 </span>
-                <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-sky-100 text-sky-800 border border-sky-200">
                   KNTT
                 </span>
               </div>
-              <p className="text-xs text-slate-400 font-medium">Cô Quỳnh Physics Lab</p>
+              <p className="text-[11px] text-slate-500 font-medium">Cô Quỳnh Physics Hub</p>
             </div>
           </Link>
 
@@ -95,13 +96,13 @@ export const Navbar: React.FC = () => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 shadow-sm shadow-cyan-500/10'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                      ? 'bg-sky-50 text-sky-700 border border-sky-200 font-semibold shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-cyan-400' : 'text-slate-400'}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-sky-600' : 'text-slate-400'}`} />
                   {item.name}
                 </Link>
               );
@@ -114,46 +115,52 @@ export const Navbar: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setShowRoleSwitcher(!showRoleSwitcher)}
-                title="Bấm để chuyển nhanh vai trò test"
-                className="flex items-center gap-1.5 text-xs bg-slate-800/80 hover:bg-slate-700/80 px-2.5 py-1.5 rounded-lg border border-slate-700 transition"
+                title="Bấm để chuyển nhanh vai trò kiểm thử"
+                className="flex items-center gap-1.5 text-xs bg-slate-100 hover:bg-slate-200/80 px-2.5 py-1.5 rounded-xl border border-slate-200 text-slate-700 transition"
               >
                 {getRoleBadge()}
-                <span className="text-[10px] text-slate-400 underline">Đổi vai trò</span>
+                <ChevronDown className="w-3 h-3 text-slate-400" />
               </button>
 
               {showRoleSwitcher && (
-                <div className="absolute right-0 mt-2 w-56 p-2 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl z-50 animate-in fade-in zoom-in-95">
-                  <p className="text-[11px] font-semibold text-slate-400 px-2 py-1 uppercase tracking-wider">
-                    Chọn nhanh vai trò:
+                <div className="absolute right-0 mt-2 w-60 p-2 rounded-2xl bg-white border border-slate-200 shadow-xl z-50 animate-in fade-in zoom-in-95">
+                  <p className="text-[11px] font-bold text-slate-400 px-3 py-1 uppercase tracking-wider">
+                    Đổi nhanh vai trò:
                   </p>
                   <button
                     onClick={() => { quickLoginAs('teacher'); setShowRoleSwitcher(false); }}
-                    className="w-full flex items-center gap-2 px-3 py-2 text-xs rounded-lg hover:bg-cyan-500/20 text-left text-slate-200 hover:text-cyan-300"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-sky-50 text-left text-slate-800 hover:text-sky-700 transition"
                   >
-                    <GraduationCap className="w-4 h-4 text-cyan-400" />
+                    <div className="p-1.5 rounded-lg bg-sky-100 text-sky-600">
+                      <GraduationCap className="w-4 h-4" />
+                    </div>
                     <div>
-                      <div className="font-semibold">Cô Quỳnh (Giáo Viên)</div>
-                      <div className="text-[10px] text-slate-400">Tạo lớp, học liệu, ngân hàng game</div>
+                      <div className="font-bold text-slate-800">Cô Quỳnh (Giáo Viên)</div>
+                      <div className="text-[10px] text-slate-500">Tạo lớp, học liệu, ngân hàng game</div>
                     </div>
                   </button>
                   <button
                     onClick={() => { quickLoginAs('student'); setShowRoleSwitcher(false); }}
-                    className="w-full flex items-center gap-2 px-3 py-2 text-xs rounded-lg hover:bg-amber-500/20 text-left text-slate-200 hover:text-amber-300"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-amber-50 text-left text-slate-800 hover:text-amber-700 transition"
                   >
-                    <School className="w-4 h-4 text-amber-400" />
+                    <div className="p-1.5 rounded-lg bg-amber-100 text-amber-600">
+                      <School className="w-4 h-4" />
+                    </div>
                     <div>
-                      <div className="font-semibold">Nguyễn Văn An (Học Sinh)</div>
-                      <div className="text-[10px] text-slate-400">Chơi 3 dạng game, tích lũy XP</div>
+                      <div className="font-bold text-slate-800">Nguyễn Văn An (Học Sinh)</div>
+                      <div className="text-[10px] text-slate-500">Chơi 3 dạng game, tích lũy XP</div>
                     </div>
                   </button>
                   <button
                     onClick={() => { quickLoginAs('admin'); setShowRoleSwitcher(false); }}
-                    className="w-full flex items-center gap-2 px-3 py-2 text-xs rounded-lg hover:bg-rose-500/20 text-left text-slate-200 hover:text-rose-300"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-rose-50 text-left text-slate-800 hover:text-rose-700 transition"
                   >
-                    <ShieldCheck className="w-4 h-4 text-rose-400" />
+                    <div className="p-1.5 rounded-lg bg-rose-100 text-rose-600">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
                     <div>
-                      <div className="font-semibold">Quản Trị Viên (Admin)</div>
-                      <div className="text-[10px] text-slate-400">Toàn quyền hệ thống</div>
+                      <div className="font-bold text-slate-800">Quản Trị Viên (Admin)</div>
+                      <div className="text-[10px] text-slate-500">Toàn quyền hệ thống</div>
                     </div>
                   </button>
                 </div>
@@ -161,15 +168,15 @@ export const Navbar: React.FC = () => {
             </div>
 
             {user ? (
-              <div className="flex items-center gap-3 pl-2 border-l border-slate-800">
+              <div className="flex items-center gap-3 pl-2 border-l border-slate-200">
                 {/* Gamification Stats */}
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold" title="Chuỗi ngày học liên tục">
-                    <Flame className="w-3.5 h-3.5 fill-amber-400 animate-pulse" />
+                  <div className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-amber-50 border border-amber-200 text-amber-700 text-xs font-bold" title="Chuỗi ngày học liên tục">
+                    <Flame className="w-3.5 h-3.5 fill-amber-500 text-amber-500 animate-pulse" />
                     <span>{user.streak || 1} ngày</span>
                   </div>
-                  <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-bold" title="Điểm kinh nghiệm Vật lí">
-                    <Zap className="w-3.5 h-3.5 fill-cyan-400" />
+                  <div className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-sky-50 border border-sky-200 text-sky-700 text-xs font-bold" title="Điểm kinh nghiệm Vật lí">
+                    <Zap className="w-3.5 h-3.5 fill-sky-500 text-sky-500" />
                     <span>{user.xp || 0} XP</span>
                   </div>
                 </div>
@@ -179,9 +186,9 @@ export const Navbar: React.FC = () => {
                   <img
                     src={user.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.full_name}`}
                     alt={user.full_name}
-                    className="w-8 h-8 rounded-full border border-cyan-500/40 object-cover group-hover:border-cyan-400 transition"
+                    className="w-8 h-8 rounded-full border-2 border-sky-300 object-cover group-hover:border-sky-500 transition"
                   />
-                  <span className="text-xs font-medium text-slate-200 max-w-[100px] truncate hidden lg:inline">
+                  <span className="text-xs font-semibold text-slate-700 max-w-[110px] truncate hidden lg:inline">
                     {user.full_name}
                   </span>
                 </Link>
@@ -189,7 +196,7 @@ export const Navbar: React.FC = () => {
                 <button
                   onClick={handleLogout}
                   title="Đăng xuất"
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition"
+                  className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
@@ -198,13 +205,13 @@ export const Navbar: React.FC = () => {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-800 transition"
+                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition"
                 >
                   <LogIn className="w-3.5 h-3.5" /> Đăng nhập
                 </Link>
                 <Link
                   to="/register"
-                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-400 hover:to-blue-500 shadow-md shadow-cyan-500/20 transition"
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-sky-600 hover:bg-sky-500 text-white shadow-sm shadow-sky-500/20 transition"
                 >
                   <UserPlus className="w-3.5 h-3.5" /> Đăng ký
                 </Link>
@@ -216,13 +223,13 @@ export const Navbar: React.FC = () => {
           <div className="flex md:hidden items-center gap-2">
             <button
               onClick={() => setShowRoleSwitcher(!showRoleSwitcher)}
-              className="p-1.5 text-xs bg-slate-800 rounded border border-slate-700"
+              className="p-1.5 text-xs bg-slate-100 rounded-lg border border-slate-200"
             >
               {getRoleBadge()}
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none"
+              className="p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -232,7 +239,7 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-800 bg-[#0B0F19]/95 px-4 pt-3 pb-6 space-y-2">
+        <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-lg">
           {navLinks.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname.startsWith(item.path);
@@ -241,38 +248,38 @@ export const Navbar: React.FC = () => {
                 key={item.path}
                 to={item.path}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium ${
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium ${
                   isActive
-                    ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30'
-                    : 'text-slate-300 hover:bg-slate-800'
+                    ? 'bg-sky-50 text-sky-700 border border-sky-200 font-semibold'
+                    : 'text-slate-700 hover:bg-slate-50'
                 }`}
               >
-                <Icon className="w-5 h-5 text-cyan-400" />
+                <Icon className="w-5 h-5 text-sky-600" />
                 {item.name}
               </Link>
             );
           })}
 
-          <div className="pt-4 border-t border-slate-800">
+          <div className="pt-4 border-t border-slate-200">
             {user ? (
               <div className="space-y-3">
-                <div className="flex items-center justify-between text-xs text-slate-300 bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+                <div className="flex items-center justify-between text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-200">
                   <div className="flex items-center gap-2">
                     <img
                       src={user.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.full_name}`}
                       alt={user.full_name}
-                      className="w-7 h-7 rounded-full border border-cyan-500/40"
+                      className="w-7 h-7 rounded-full border border-sky-400"
                     />
-                    <span className="font-semibold">{user.full_name}</span>
+                    <span className="font-bold">{user.full_name}</span>
                   </div>
                   <div className="flex gap-2">
-                    <span className="text-amber-400 font-bold">🔥 {user.streak || 1}d</span>
-                    <span className="text-cyan-400 font-bold">⚡ {user.xp || 0} XP</span>
+                    <span className="text-amber-700 font-bold">🔥 {user.streak || 1}d</span>
+                    <span className="text-sky-700 font-bold">⚡ {user.xp || 0} XP</span>
                   </div>
                 </div>
                 <button
                   onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
-                  className="w-full flex items-center justify-center gap-2 py-2 text-xs font-semibold text-rose-400 bg-rose-500/10 rounded-lg"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-bold text-rose-700 bg-rose-50 border border-rose-200 rounded-xl"
                 >
                   <LogOut className="w-4 h-4" /> Đăng xuất
                 </button>
@@ -282,14 +289,14 @@ export const Navbar: React.FC = () => {
                 <Link
                   to="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2 text-sm font-semibold text-slate-200 bg-slate-800 rounded-lg"
+                  className="w-full text-center py-2.5 text-sm font-bold text-slate-700 bg-slate-100 rounded-xl"
                 >
                   Đăng nhập
                 </Link>
                 <Link
                   to="/register"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2 text-sm font-semibold bg-cyan-500 text-white rounded-lg"
+                  className="w-full text-center py-2.5 text-sm font-bold bg-sky-600 text-white rounded-xl shadow-sm"
                 >
                   Đăng ký tài khoản
                 </Link>
@@ -301,3 +308,4 @@ export const Navbar: React.FC = () => {
     </header>
   );
 };
+

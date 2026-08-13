@@ -141,13 +141,13 @@ export const MatchingGame: React.FC<MatchingGameProps> = ({
   const timerPercentage = (timeLeft / timeLimit) * 100;
   const { correctCount } = calculateResult();
 
-  // Color mapping for matching pairs
+  // Color mapping for matching pairs on white background
   const colorPalette = [
-    'border-cyan-500 bg-cyan-500/10 text-cyan-300',
-    'border-emerald-500 bg-emerald-500/10 text-emerald-300',
-    'border-amber-500 bg-amber-500/10 text-amber-300',
-    'border-indigo-500 bg-indigo-500/10 text-indigo-300',
-    'border-rose-500 bg-rose-500/10 text-rose-300',
+    'border-sky-500 bg-sky-50 text-sky-900',
+    'border-emerald-500 bg-emerald-50 text-emerald-900',
+    'border-amber-500 bg-amber-50 text-amber-900',
+    'border-indigo-500 bg-indigo-50 text-indigo-900',
+    'border-rose-500 bg-rose-50 text-rose-900',
   ];
 
   return (
@@ -155,33 +155,33 @@ export const MatchingGame: React.FC<MatchingGameProps> = ({
       {/* Top Bar */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">
+          <span className="px-3 py-1 rounded-full text-xs font-black bg-indigo-50 text-indigo-800 border border-indigo-200">
             Dạng Ghép Cặp: Câu {questionIndex + 1} / {totalQuestions}
           </span>
-          <span className="text-xs text-slate-400 font-medium hidden sm:inline">
-            (Bấm chọn thẻ cột trái sau đó bấm thẻ tương ứng ở cột phải)
+          <span className="text-xs text-slate-500 font-medium hidden sm:inline">
+            (Bấm chọn thẻ cột A sau đó bấm thẻ tương ứng ở cột B)
           </span>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="w-32 sm:w-48 h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div className="w-32 sm:w-48 h-2.5 bg-slate-200 rounded-full overflow-hidden">
             <div
               className={`h-full transition-all duration-1000 ${
-                timerPercentage > 40 ? 'bg-indigo-400' : 'bg-rose-500'
+                timerPercentage > 40 ? 'bg-indigo-500' : 'bg-rose-500'
               }`}
               style={{ width: `${timerPercentage}%` }}
             />
           </div>
-          <div className="flex items-center gap-1 text-xs font-bold text-slate-300">
-            <Clock className="w-3.5 h-3.5 text-indigo-400" />
+          <div className="flex items-center gap-1 text-xs font-bold text-slate-700">
+            <Clock className="w-3.5 h-3.5 text-indigo-600" />
             <span>{timeLeft}s</span>
           </div>
         </div>
       </div>
 
       {/* Question Lead */}
-      <div className="p-6 rounded-2xl bg-gradient-to-b from-slate-800/90 to-slate-900/90 border border-slate-700 shadow-xl">
-        <div className="text-base sm:text-lg font-medium text-slate-100 leading-relaxed">
+      <div className="p-6 sm:p-7 rounded-3xl bg-white border border-slate-200/90 shadow-soft">
+        <div className="text-base sm:text-lg font-semibold text-slate-900 leading-relaxed">
           <MathRenderer content={question.content} />
         </div>
       </div>
@@ -191,12 +191,12 @@ export const MatchingGame: React.FC<MatchingGameProps> = ({
         
         {/* CỘT A (TRÁI) */}
         <div className="space-y-3">
-          <div className="flex items-center justify-between pb-1 border-b border-slate-800">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-400">Cột A: Khái Niệm / Hiện Tượng</h4>
+          <div className="flex items-center justify-between pb-1 border-b border-slate-200">
+            <h4 className="text-xs font-black uppercase tracking-wider text-sky-700">Cột A: Khái Niệm / Hiện Tượng</h4>
             {!isSubmitted && Object.keys(matches).length > 0 && (
               <button
                 onClick={resetAllMatches}
-                className="text-[11px] text-slate-400 hover:text-rose-400 flex items-center gap-1 transition"
+                className="text-[11px] font-bold text-slate-500 hover:text-rose-600 flex items-center gap-1 transition"
               >
                 <RefreshCw className="w-3 h-3" /> Nối lại từ đầu
               </button>
@@ -218,31 +218,31 @@ export const MatchingGame: React.FC<MatchingGameProps> = ({
                   type="button"
                   onClick={() => handleLeftClick(item.id)}
                   disabled={isSubmitted}
-                  className={`w-full p-4 rounded-xl border text-left flex items-start gap-3 transition-all duration-200 ${
+                  className={`w-full p-4 rounded-2xl border text-left flex items-start gap-3 transition-all duration-200 ${
                     isSubmitted
                       ? isRightCorrect
-                        ? 'bg-emerald-500/20 border-emerald-500 text-emerald-200'
-                        : 'bg-rose-500/20 border-rose-500 text-rose-200'
+                        ? 'bg-emerald-50/90 border-emerald-400 text-emerald-950'
+                        : 'bg-rose-50/90 border-rose-400 text-rose-950'
                       : isSelected
-                      ? 'border-cyan-400 bg-cyan-500/20 text-cyan-100 ring-2 ring-cyan-500/40 scale-[1.02]'
+                      ? 'border-sky-500 bg-sky-50 text-sky-900 ring-2 ring-sky-400/30 scale-[1.01]'
                       : isMatched
-                      ? `${colorClass} shadow-sm`
-                      : 'bg-slate-900/80 border-slate-800 hover:border-slate-700 text-slate-200'
+                      ? `${colorClass} shadow-xs`
+                      : 'bg-white border-slate-200 hover:border-slate-300 text-slate-800 shadow-xs'
                   }`}
                 >
-                  <span className="w-6 h-6 rounded-lg bg-slate-800 text-cyan-400 border border-slate-700 flex items-center justify-center font-bold text-xs shrink-0">
+                  <span className="w-6 h-6 rounded-lg bg-slate-100 text-sky-700 border border-slate-200 flex items-center justify-center font-bold text-xs shrink-0">
                     {idx + 1}
                   </span>
                   <div className="flex-1 text-sm font-medium pt-0.5">
                     <MathRenderer content={item.text} />
                   </div>
                   {isMatched && !isSubmitted && (
-                    <Link2 className="w-4 h-4 text-cyan-400 shrink-0 self-center" />
+                    <Link2 className="w-4 h-4 text-sky-600 shrink-0 self-center" />
                   )}
                   {isSubmitted && (
                     isRightCorrect
-                      ? <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 self-center" />
-                      : <XCircle className="w-5 h-5 text-rose-400 shrink-0 self-center" />
+                      ? <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 self-center" />
+                      : <XCircle className="w-5 h-5 text-rose-600 shrink-0 self-center" />
                   )}
                 </button>
               );
@@ -252,8 +252,8 @@ export const MatchingGame: React.FC<MatchingGameProps> = ({
 
         {/* CỘT B (PHẢI) */}
         <div className="space-y-3">
-          <div className="pb-1 border-b border-slate-800">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-indigo-400">Cột B: Bản Chất / Công Thức</h4>
+          <div className="pb-1 border-b border-slate-200">
+            <h4 className="text-xs font-black uppercase tracking-wider text-indigo-700">Cột B: Bản Chất / Công Thức</h4>
           </div>
 
           <div className="space-y-3">
@@ -272,26 +272,26 @@ export const MatchingGame: React.FC<MatchingGameProps> = ({
                   type="button"
                   onClick={() => handleRightClick(item.id)}
                   disabled={isSubmitted}
-                  className={`w-full p-4 rounded-xl border text-left flex items-start gap-3 transition-all duration-200 ${
+                  className={`w-full p-4 rounded-2xl border text-left flex items-start gap-3 transition-all duration-200 ${
                     isSubmitted
                       ? isMatched
                         ? isMatchCorrect
-                          ? 'bg-emerald-500/20 border-emerald-500 text-emerald-200'
-                          : 'bg-rose-500/20 border-rose-500 text-rose-200'
-                        : 'bg-slate-900/40 border-slate-800 text-slate-500 opacity-60'
+                          ? 'bg-emerald-50/90 border-emerald-400 text-emerald-950'
+                          : 'bg-rose-50/90 border-rose-400 text-rose-950'
+                        : 'bg-slate-50 border-slate-200 text-slate-400 opacity-60'
                       : isMatched
-                      ? `${colorClass} shadow-sm`
+                      ? `${colorClass} shadow-xs`
                       : selectedLeft
-                      ? 'bg-slate-900/80 border-indigo-500/40 hover:border-indigo-400 text-slate-200 animate-pulse'
-                      : 'bg-slate-900/80 border-slate-800 hover:border-slate-700 text-slate-200'
+                      ? 'bg-indigo-50/70 border-indigo-400 text-indigo-950 animate-pulse'
+                      : 'bg-white border-slate-200 hover:border-slate-300 text-slate-800 shadow-xs'
                   }`}
                 >
                   <div className="flex-1 text-sm font-medium pt-0.5">
                     <MathRenderer content={item.text} />
                   </div>
                   {isMatched && (
-                    <span className="text-xs font-bold px-2 py-0.5 rounded bg-slate-800 text-white shrink-0 self-center">
-                      Nối với #{leftIndex + 1}
+                    <span className="text-xs font-black px-2.5 py-0.5 rounded-lg bg-white border border-slate-200 text-slate-800 shrink-0 self-center shadow-xs">
+                      Nối #{leftIndex + 1}
                     </span>
                   )}
                 </button>
@@ -308,10 +308,10 @@ export const MatchingGame: React.FC<MatchingGameProps> = ({
           <button
             onClick={handleSubmit}
             disabled={!allConnected}
-            className={`px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 transition ${
+            className={`px-6 py-3 rounded-2xl font-extrabold text-sm flex items-center gap-2 transition ${
               allConnected
-                ? 'bg-gradient-to-r from-indigo-500 to-cyan-600 hover:from-indigo-400 hover:to-cyan-500 text-white shadow-lg shadow-indigo-500/20 cursor-pointer'
-                : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                ? 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/20 cursor-pointer active:scale-95'
+                : 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed'
             }`}
           >
             <span>{allConnected ? 'Xác nhận Nối Cặp' : `Đã nối ${Object.keys(matches).length}/${leftItems.length} cặp`}</span>
@@ -319,45 +319,47 @@ export const MatchingGame: React.FC<MatchingGameProps> = ({
         </div>
       ) : (
         <div className="space-y-4 pt-2 animate-in fade-in slide-in-from-bottom-3 duration-300">
-          <div className="p-4 rounded-xl bg-slate-900 border border-slate-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-soft flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
-              <div className="font-bold text-sm text-slate-100 flex items-center gap-2">
+              <div className="font-bold text-sm text-slate-900 flex items-center gap-2">
                 {correctCount === leftItems.length ? (
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
                 ) : (
-                  <XCircle className="w-5 h-5 text-indigo-400" />
+                  <XCircle className="w-5 h-5 text-indigo-600" />
                 )}
                 <span>
                   Bạn đã nối chính xác {correctCount}/{leftItems.length} cặp!
                 </span>
               </div>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-500 mt-0.5">
                 Nhận được +{Math.round((correctCount / leftItems.length) * 100)} XP kinh nghiệm
               </p>
             </div>
 
             <button
               onClick={() => setShowExplanation(!showExplanation)}
-              className="flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition"
+              className="flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition"
             >
-              <Lightbulb className="w-3.5 h-3.5 text-amber-400" />
+              <Lightbulb className="w-3.5 h-3.5 text-amber-500" />
               {showExplanation ? 'Ẩn lời giải' : 'Xem đáp án chuẩn'}
             </button>
           </div>
 
           {showExplanation && question.explanation && (
-            <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-slate-300 space-y-1">
-              <div className="font-bold text-amber-400 flex items-center gap-1.5 mb-1">
-                <Lightbulb className="w-4 h-4" /> Bảng ghép cặp chuẩn SGK Vật Lí 12:
+            <div className="p-5 rounded-2xl bg-white border border-amber-200 shadow-soft text-xs text-slate-700 space-y-1.5">
+              <div className="font-extrabold text-amber-800 flex items-center gap-1.5 mb-1">
+                <Lightbulb className="w-4 h-4 text-amber-600" /> Bảng ghép cặp chuẩn SGK Vật Lí 12:
               </div>
-              <MathRenderer content={question.explanation} block />
+              <div className="font-medium leading-relaxed">
+                <MathRenderer content={question.explanation} block />
+              </div>
             </div>
           )}
 
           <div className="flex justify-end">
             <button
               onClick={handleNext}
-              className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-indigo-500 to-cyan-600 hover:from-indigo-400 hover:to-cyan-500 text-white shadow-lg shadow-indigo-500/25 transition active:scale-95"
+              className="flex items-center gap-2 px-6 py-3 rounded-2xl font-extrabold text-sm bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/20 transition active:scale-95"
             >
               <span>{questionIndex + 1 === totalQuestions ? 'Xem Tổng Kết' : 'Câu Tiếp Theo'}</span>
               <ArrowRight className="w-4 h-4" />
@@ -368,3 +370,4 @@ export const MatchingGame: React.FC<MatchingGameProps> = ({
     </div>
   );
 };
+

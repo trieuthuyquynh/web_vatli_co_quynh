@@ -52,21 +52,21 @@ export const JoinClassModal: React.FC<JoinClassModalProps> = ({
     <Modal isOpen={isOpen} onClose={onClose} title="Tham Gia Lớp Học Vật Lí 12">
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0" />
+          <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
             <span>{error}</span>
           </div>
         )}
 
         {successMsg && (
-          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 shrink-0" />
+          <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
             <span>{successMsg}</span>
           </div>
         )}
 
         <div className="space-y-1">
-          <label className="block text-xs font-bold text-slate-300 uppercase">
+          <label className="block text-xs font-bold text-slate-700 uppercase">
             Nhập Mã Tham Gia Lớp (Class Code) *
           </label>
           <div className="relative">
@@ -76,11 +76,11 @@ export const JoinClassModal: React.FC<JoinClassModalProps> = ({
               placeholder="VD: VATLI12A1 hoặc VL12-XXXXX"
               value={code}
               onChange={(e) => setCode(e.target.value.toUpperCase())}
-              className="w-full pl-10 pr-3.5 py-3 rounded-xl bg-slate-900 border border-slate-700 text-base text-cyan-300 font-mono tracking-widest placeholder-slate-500 focus:outline-none focus:border-cyan-500 uppercase"
+              className="w-full pl-10 pr-3.5 py-3 rounded-xl bg-slate-50 border border-slate-200 text-base text-sky-700 font-mono tracking-widest placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 uppercase font-black"
             />
-            <Key className="w-5 h-5 text-slate-500 absolute left-3 top-3.5" />
+            <Key className="w-5 h-5 text-slate-400 absolute left-3 top-3.5" />
           </div>
-          <p className="text-[11px] text-slate-400">
+          <p className="text-[11px] text-slate-500">
             Xin mã lớp từ Cô Quỳnh hoặc giáo viên bộ môn Vật Lí của bạn.
           </p>
         </div>
@@ -89,14 +89,14 @@ export const JoinClassModal: React.FC<JoinClassModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white bg-slate-800 transition"
+            className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 transition"
           >
             Đóng
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="px-6 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/20 transition flex items-center gap-2"
+            className="px-6 py-2.5 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white shadow-sm transition flex items-center gap-2 active:scale-95"
           >
             <LogIn className="w-4 h-4" />
             <span>{isSubmitting ? 'Đang kiểm tra...' : 'Tham Gia Lớp'}</span>
@@ -106,3 +106,4 @@ export const JoinClassModal: React.FC<JoinClassModalProps> = ({
     </Modal>
   );
 };
+

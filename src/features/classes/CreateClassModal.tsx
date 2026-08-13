@@ -56,14 +56,14 @@ export const CreateClassModal: React.FC<CreateClassModalProps> = ({
     <Modal isOpen={isOpen} onClose={onClose} title="Tạo Lớp Học Vật Lí 12 Mới">
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0" />
+          <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
             <span>{error}</span>
           </div>
         )}
 
         <div className="space-y-1">
-          <label className="block text-xs font-bold text-slate-300 uppercase">
+          <label className="block text-xs font-bold text-slate-700 uppercase">
             Tên lớp học *
           </label>
           <input
@@ -72,38 +72,38 @@ export const CreateClassModal: React.FC<CreateClassModalProps> = ({
             placeholder="VD: 12A1 - Chuyên Đề Ôn Thi Tốt Nghiệp THPT"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+            className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"
           />
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1">
-            <label className="block text-xs font-bold text-slate-300 uppercase">
+            <label className="block text-xs font-bold text-slate-700 uppercase">
               Khối lớp
             </label>
             <input
               type="text"
               value={grade}
               onChange={(e) => setGrade(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 focus:outline-none focus:border-cyan-500"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"
             />
           </div>
 
           <div className="space-y-1">
-            <label className="block text-xs font-bold text-slate-300 uppercase">
+            <label className="block text-xs font-bold text-slate-700 uppercase">
               Năm học
             </label>
             <input
               type="text"
               value={schoolYear}
               onChange={(e) => setSchoolYear(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 focus:outline-none focus:border-cyan-500"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"
             />
           </div>
         </div>
 
         <div className="space-y-1">
-          <label className="block text-xs font-bold text-slate-300 uppercase">
+          <label className="block text-xs font-bold text-slate-700 uppercase">
             Mô tả / Thông báo cho học sinh
           </label>
           <textarea
@@ -111,11 +111,11 @@ export const CreateClassModal: React.FC<CreateClassModalProps> = ({
             placeholder="VD: Lớp dành cho các bạn ôn luyện kiến thức Vật Lí 12 KNTT và thi đấu game hàng tuần..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 resize-none"
+            className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 resize-none"
           />
         </div>
 
-        <p className="text-[11px] text-cyan-400">
+        <p className="text-[11px] text-sky-700 font-medium">
           💡 Hệ thống sẽ tự động tạo một Mã Lớp (Class Code) ngẫu nhiên 6 ký tự để thầy cô gửi cho học sinh tham gia.
         </p>
 
@@ -123,14 +123,14 @@ export const CreateClassModal: React.FC<CreateClassModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white bg-slate-800 transition"
+            className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 transition"
           >
             Hủy bỏ
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="px-6 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/20 transition flex items-center gap-2"
+            className="px-6 py-2.5 rounded-xl text-xs font-bold bg-sky-600 hover:bg-sky-500 text-white shadow-sm transition flex items-center gap-2 active:scale-95"
           >
             <Plus className="w-4 h-4" />
             <span>{isSubmitting ? 'Đang tạo...' : 'Tạo Lớp'}</span>
@@ -140,3 +140,4 @@ export const CreateClassModal: React.FC<CreateClassModalProps> = ({
     </Modal>
   );
 };
+

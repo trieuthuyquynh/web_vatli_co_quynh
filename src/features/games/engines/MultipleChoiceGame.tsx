@@ -99,24 +99,24 @@ export const MultipleChoiceGame: React.FC<MultipleChoiceGameProps> = ({
 
         {/* Timer Bar */}
         <div className="flex items-center gap-3">
-          <div className="w-32 sm:w-48 h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div className="w-32 sm:w-48 h-2.5 bg-slate-200 rounded-full overflow-hidden">
             <div
               className={`h-full transition-all duration-1000 ${
-                timerPercentage > 40 ? 'bg-cyan-400' : timerPercentage > 20 ? 'bg-amber-400' : 'bg-rose-500'
+                timerPercentage > 40 ? 'bg-sky-500' : timerPercentage > 20 ? 'bg-amber-500' : 'bg-rose-500'
               }`}
               style={{ width: `${timerPercentage}%` }}
             />
           </div>
-          <div className="flex items-center gap-1 text-xs font-bold text-slate-300">
-            <Clock className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="flex items-center gap-1 text-xs font-bold text-slate-700">
+            <Clock className="w-3.5 h-3.5 text-sky-600" />
             <span>{timeLeft}s</span>
           </div>
         </div>
       </div>
 
       {/* Question Content Box */}
-      <div className="p-6 rounded-2xl bg-gradient-to-b from-slate-800/80 to-slate-900/90 border border-slate-700/80 shadow-xl">
-        <div className="text-base sm:text-lg font-medium text-slate-100 leading-relaxed">
+      <div className="p-6 sm:p-7 rounded-3xl bg-white border border-slate-200/90 shadow-soft">
+        <div className="text-base sm:text-lg font-semibold text-slate-900 leading-relaxed">
           <MathRenderer content={question.content} />
         </div>
       </div>
@@ -128,15 +128,15 @@ export const MultipleChoiceGame: React.FC<MultipleChoiceGameProps> = ({
           const isSelected = selectedOption === letter;
           const isThisCorrect = letter === correctAnswer;
 
-          let btnStyle = 'bg-slate-900/80 border-slate-700 hover:border-cyan-500/50 hover:bg-slate-800/80 text-slate-200';
+          let btnStyle = 'bg-white border-slate-200 hover:border-sky-300 hover:bg-sky-50/50 text-slate-800 shadow-xs';
 
           if (isAnswered) {
             if (isThisCorrect) {
-              btnStyle = 'bg-emerald-500/20 border-emerald-500 text-emerald-300 ring-2 ring-emerald-500/30';
+              btnStyle = 'bg-emerald-50 border-emerald-500 text-emerald-900 ring-2 ring-emerald-400/30';
             } else if (isSelected && !isThisCorrect) {
-              btnStyle = 'bg-rose-500/20 border-rose-500 text-rose-300 ring-2 ring-rose-500/30';
+              btnStyle = 'bg-rose-50 border-rose-500 text-rose-900 ring-2 ring-rose-400/30';
             } else {
-              btnStyle = 'bg-slate-900/40 border-slate-800 text-slate-500 opacity-60';
+              btnStyle = 'bg-slate-50 border-slate-200 text-slate-400 opacity-60';
             }
           }
 
@@ -145,16 +145,16 @@ export const MultipleChoiceGame: React.FC<MultipleChoiceGameProps> = ({
               key={letter}
               onClick={() => handleSelectOption(letter)}
               disabled={isAnswered}
-              className={`p-4 rounded-xl border text-left flex items-start gap-3 transition-all duration-200 ${btnStyle} ${
+              className={`p-4 rounded-2xl border text-left flex items-start gap-3.5 transition-all duration-200 ${btnStyle} ${
                 !isAnswered ? 'cursor-pointer active:scale-[0.99]' : 'cursor-default'
               }`}
             >
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm shrink-0 ${
+              <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 shadow-xs ${
                 isAnswered && isThisCorrect
-                  ? 'bg-emerald-500 text-white'
+                  ? 'bg-emerald-600 text-white'
                   : isAnswered && isSelected && !isThisCorrect
-                  ? 'bg-rose-500 text-white'
-                  : 'bg-slate-800 text-cyan-400 border border-slate-700'
+                  ? 'bg-rose-600 text-white'
+                  : 'bg-slate-100 text-sky-700 border border-slate-200'
               }`}>
                 {letter}
               </div>
@@ -162,10 +162,10 @@ export const MultipleChoiceGame: React.FC<MultipleChoiceGameProps> = ({
                 <MathRenderer content={optText} />
               </div>
               {isAnswered && isThisCorrect && (
-                <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 self-center" />
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 self-center" />
               )}
               {isAnswered && isSelected && !isThisCorrect && (
-                <XCircle className="w-5 h-5 text-rose-400 shrink-0 self-center" />
+                <XCircle className="w-5 h-5 text-rose-600 shrink-0 self-center" />
               )}
             </button>
           );
@@ -175,20 +175,20 @@ export const MultipleChoiceGame: React.FC<MultipleChoiceGameProps> = ({
       {/* Answer Feedback & Explanation */}
       {isAnswered && (
         <div className="space-y-4 pt-2 animate-in fade-in slide-in-from-bottom-3 duration-300">
-          <div className={`p-4 rounded-xl border flex items-center justify-between ${
+          <div className={`p-4 rounded-2xl border flex items-center justify-between shadow-xs ${
             selectedOption === correctAnswer
-              ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
-              : 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+              ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+              : 'bg-rose-50 border-rose-200 text-rose-800'
           }`}>
             <div className="flex items-center gap-2 font-bold text-sm">
               {selectedOption === correctAnswer ? (
                 <>
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
                   <span>Chính xác! Bạn nhận được +100 XP</span>
                 </>
               ) : (
                 <>
-                  <XCircle className="w-5 h-5 text-rose-400" />
+                  <XCircle className="w-5 h-5 text-rose-600" />
                   <span>Chưa đúng! Đáp án đúng là {correctAnswer}</span>
                 </>
               )}
@@ -196,26 +196,28 @@ export const MultipleChoiceGame: React.FC<MultipleChoiceGameProps> = ({
 
             <button
               onClick={() => setShowExplanation(!showExplanation)}
-              className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 transition"
+              className="flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 shadow-xs transition"
             >
-              <Lightbulb className="w-3.5 h-3.5 text-amber-400" />
+              <Lightbulb className="w-3.5 h-3.5 text-amber-500" />
               {showExplanation ? 'Ẩn lời giải' : 'Xem lời giải chi tiết'}
             </button>
           </div>
 
           {showExplanation && question.explanation && (
-            <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-slate-300 space-y-1">
-              <div className="font-bold text-amber-400 flex items-center gap-1.5 mb-1">
-                <Lightbulb className="w-4 h-4" /> Hướng dẫn giải & Phân tích hiện tượng:
+            <div className="p-5 rounded-2xl bg-white border border-amber-200 shadow-soft text-xs text-slate-700 space-y-1.5">
+              <div className="font-extrabold text-amber-800 flex items-center gap-1.5 mb-1">
+                <Lightbulb className="w-4 h-4 text-amber-600" /> Hướng dẫn giải & Phân tích hiện tượng:
               </div>
-              <MathRenderer content={question.explanation} block />
+              <div className="font-medium leading-relaxed">
+                <MathRenderer content={question.explanation} block />
+              </div>
             </div>
           )}
 
           <div className="flex justify-end">
             <button
               onClick={handleNext}
-              className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/25 transition active:scale-95"
+              className="flex items-center gap-2 px-6 py-3 rounded-2xl font-extrabold text-sm bg-sky-600 hover:bg-sky-500 text-white shadow-md shadow-sky-600/20 transition active:scale-95"
             >
               <span>{questionIndex + 1 === totalQuestions ? 'Xem Kết Quả' : 'Câu Tiếp Theo'}</span>
               <ArrowRight className="w-4 h-4" />

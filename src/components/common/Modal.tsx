@@ -36,17 +36,17 @@ export const Modal: React.FC<ModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity animate-in fade-in"
+        className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity animate-in fade-in"
         onClick={onClose}
       />
 
       {/* Modal Box */}
-      <div className={`relative w-full ${maxWidth} rounded-2xl bg-[#111827] border border-slate-700 shadow-2xl p-6 z-10 animate-in zoom-in-95 duration-200`}>
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
-          <h3 className="text-lg font-bold text-slate-100">{title}</h3>
+      <div className={`relative w-full ${maxWidth} rounded-3xl bg-white border border-slate-200 shadow-2xl p-6 sm:p-7 z-10 animate-in zoom-in-95 duration-200`}>
+        <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
+          <h3 className="text-lg font-extrabold text-slate-900">{title}</h3>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -57,3 +57,4 @@ export const Modal: React.FC<ModalProps> = ({
     </div>
   );
 };
+

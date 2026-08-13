@@ -9,37 +9,39 @@ export default {
     extend: {
       colors: {
         physics: {
-          dark: '#0B0F19',
-          card: '#111827',
-          cardHover: '#1F2937',
-          cyan: '#06B6D4',
-          blue: '#2563EB',
-          quantum: '#3B82F6',
-          amber: '#F59E0B',
-          emerald: '#10B981',
-          rose: '#F43F5E',
+          lightBg: '#F8FAFC',
+          card: '#FFFFFF',
+          cardBorder: '#E2E8F0',
+          dark: '#0F172A',
+          primary: '#0284C7', // Sky blue khoa học
+          primaryLight: '#E0F2FE',
+          secondary: '#2563EB', // Royal blue
+          accent: '#0D9488', // Teal ngọc
+          amber: '#D97706',
+          emerald: '#059669',
+          rose: '#E11D48',
         }
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['Fira Code', 'monospace'],
       },
+      boxShadow: {
+        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02)',
+        'card-hover': '0 10px 25px -5px rgba(2, 132, 199, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04)',
+      },
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'float': 'float 4s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-8px)' },
-        },
-        glow: {
-          '0%': { boxShadow: '0 0 10px rgba(6, 182, 212, 0.2)' },
-          '100%': { boxShadow: '0 0 25px rgba(6, 182, 212, 0.6)' },
+          '50%': { transform: 'translateY(-6px)' },
         }
       }
     },
   },
   plugins: [],
 }
+
