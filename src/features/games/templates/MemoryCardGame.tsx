@@ -175,7 +175,7 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
       return (
         <span 
           dangerouslySetInnerHTML={{ 
-            __html: katex.renderToString(text, { throwOnError: false, displayMode: true }) 
+            __html: katex.renderToString(text, { throwOnError: false, displayMode: true, output: 'html' }) 
           }} 
         />
       );

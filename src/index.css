@@ -29,11 +29,23 @@
 
 /* KaTeX custom sizing in academic physics context */
 .katex {
-  font-size: 1.05em !important;
-  color: #0F172A !important;
+  font-size: 1.1em !important;
+  color: #0369A1 !important; /* Sky-700 chuẩn sắc nét */
+  font-weight: 600 !important;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .katex-display {
   margin: 0.5em 0 !important;
 }
 
+/* Ẩn triệt để thẻ MathML thô để không bao giờ bị lặp lại công thức text */
+.katex-mathml {
+  display: none !important;
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden !important;
+}

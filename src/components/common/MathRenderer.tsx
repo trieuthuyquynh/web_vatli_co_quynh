@@ -1,5 +1,6 @@
 import React from 'react';
 import katex from 'katex';
+import 'katex/dist/katex.min.css';
 
 interface MathRendererProps {
   content: string;
@@ -12,37 +13,47 @@ export const MathRenderer: React.FC<MathRendererProps> = ({ content, className =
 
   // Xử lý chuỗi có chứa $...$ hoặc $$...$$
   const renderFormattedText = (text: string) => {
-    // Regex tìm $...$ (inline) hoặc $$...$$ (block)
+    // Regex tìm $$...$$ (block) hoặc $...$ (inline)
     const parts = text.split(/(\$\$[\s\S]+?\$\$|\$[^\$]+?\$)/g);
 
     return parts.map((part, index) => {
       if (part.startsWith('$$') && part.endsWith('$$')) {
         const formula = part.slice(2, -2).trim();
         try {
-          const html = katex.renderToString(formula, { displayMode: true, throwOnError: false });
+          // Chỉ xuất HTML (output: 'html') để loại trừ 100% việc lặp text MathML
+          const html = katex.renderToString(formula, {
+            displayMode: true,
+            throwOnError: false,
+            output: 'html',
+          });
           return (
             <span
               key={index}
-              className="my-2 block text-center overflow-x-auto text-cyan-300"
+              className="my-2 block text-center overflow-x-auto text-sky-700 font-bold px-1"
               dangerouslySetInnerHTML={{ __html: html }}
             />
           );
         } catch {
-          return <span key={index} className="text-cyan-300 font-mono">{part}</span>;
+          return <span key={index} className="text-sky-700 font-mono">{part}</span>;
         }
       } else if (part.startsWith('$') && part.endsWith('$')) {
         const formula = part.slice(1, -1).trim();
         try {
-          const html = katex.renderToString(formula, { displayMode: false, throwOnError: false });
+          // Chỉ xuất HTML (output: 'html') để loại trừ 100% việc lặp text MathML
+          const html = katex.renderToString(formula, {
+            displayMode: false,
+            throwOnError: false,
+            output: 'html',
+          });
           return (
             <span
               key={index}
-              className="inline-block text-cyan-300 font-medium px-0.5"
+              className="inline-block text-sky-700 font-semibold px-0.5 mx-0.5"
               dangerouslySetInnerHTML={{ __html: html }}
             />
           );
         } catch {
-          return <span key={index} className="text-cyan-300 font-mono">{part}</span>;
+          return <span key={index} className="text-sky-700 font-mono">{part}</span>;
         }
       }
 
