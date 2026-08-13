@@ -272,7 +272,7 @@ INSERT INTO public.lessons (id, chapter_id, number, title, summary, key_formulas
 ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, summary = EXCLUDED.summary;
 
 -- 18. BƯỚC 3: NẠP 16 CÂU HỎI 4 CHỦ ĐỀ CHUẨN ĐỘ KHÓ
-DELETE FROM public.questions WHERE lesson_id LIKE 'b%';
+DELETE FROM public.questions WHERE lesson_id::text LIKE 'b%';
 
 -- Chủ đề 1: Vật Lí Nhiệt
 INSERT INTO public.questions (lesson_id, type, content, options, correct_answer, explanation, difficulty) VALUES
