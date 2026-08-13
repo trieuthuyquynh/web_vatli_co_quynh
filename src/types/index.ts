@@ -152,3 +152,94 @@ export interface Badge {
   criteria_value: number;
   unlocked?: boolean;
 }
+
+// ==========================================
+// MỞ RỘNG BỘ TÍNH NĂNG TRÒ CHƠI (GAME-01 -> GAME-10)
+// ==========================================
+
+export type CustomGameType = 
+  | 'iframe'        // GAME-01: Nhúng Wordwall, Quizizz, Kahoot, Canva, Genially...
+  | 'html5_zip'     // GAME-02: Game HTML5 upload bằng file ZIP
+  | 'memory_card'   // GAME-09: Mini game Lật thẻ ghi nhớ ghép cặp
+  | 'crossword'     // GAME-09: Mini game Khung chữ / Ô chữ Vật Lí
+  | 'lucky_wheel';  // GAME-09: Mini game Vòng quay may mắn
+
+export interface MemoryCardPair {
+  id: string;
+  term: string; // Tên hiện tượng / định luật
+  formulaOrDef: string; // Công thức / Định nghĩa (hỗ trợ LaTeX)
+}
+
+export interface CrosswordWord {
+  id: string;
+  clue: string; // Gợi ý câu hỏi
+  answer: string; // Từ khóa không dấu / viết hoa (VD: "NHIETDUNGRIENG")
+  displayTerm: string; // Từ hiển thị chuẩn tiếng Việt (VD: "Nhiệt Dung Riêng")
+}
+
+export interface LuckyWheelItem {
+  id: string;
+  label: string; // Nhãn ô quay (VD: "+100 XP", "Câu hỏi 1", "Nhân đôi XP")
+  color: string;
+  type: 'xp' | 'question' | 'bonus';
+  value: number | string;
+  question?: Question;
+}
+
+export interface CustomGame {
+  id: string;
+  title: string;
+  description?: string;
+  game_type: CustomGameType;
+  embed_url?: string; // Dùng cho GAME-01 (iFrame)
+  zip_blob_url?: string; // Dùng cho GAME-02 (HTML5 runner URL)
+  zip_file_name?: string;
+  teacher_id: string;
+  lesson_id?: string;
+  chapter_id?: string;
+  class_id?: string;
+  max_attempts: number; // GAME-06: -1 là không giới hạn, 1 là 1 lần, v.v.
+  time_limit?: number; // Giây
+  thumbnail_url?: string;
+  game_config?: {
+    pairs?: MemoryCardPair[];
+    words?: CrosswordWord[];
+    wheelItems?: LuckyWheelItem[];
+    allowFullScreen?: boolean;
+    provider?: 'wordwall' | 'quizizz' | 'kahoot' | 'canva' | 'genially' | 'phet' | 'html5' | 'custom';
+  };
+  likes_count: number; // GAME-10
+  avg_rating: number; // GAME-10 (1-5 sao)
+  rating_count: number;
+  play_count: number;
+  is_active: boolean;
+  created_at?: string;
+  lessons?: Lesson;
+  profiles?: Profile;
+}
+
+export interface GameFeedback {
+  id: string;
+  game_id: string;
+  student_id: string;
+  student_name?: string;
+  student_avatar?: string;
+  rating: number; // 1 -> 5 sao
+  comment: string;
+  is_liked: boolean;
+  created_at: string;
+}
+
+export interface CustomGameAttempt {
+  id: string;
+  game_id: string;
+  student_id: string;
+  score: number; // Thang 10 hoặc raw score
+  max_score: number;
+  time_spent: number; // Số giây (GAME-05)
+  is_practice: boolean; // GAME-08 (true: chơi luyện tập, false: tính điểm chính)
+  started_at: string;
+  completed_at: string;
+  profiles?: Profile;
+  custom_games?: CustomGame;
+}

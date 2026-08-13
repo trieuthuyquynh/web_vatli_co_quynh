@@ -24,6 +24,7 @@ export default defineConfig({
           'vendor-supabase': ['@supabase/supabase-js'],
           'vendor-katex': ['katex'],
           'vendor-ui': ['lucide-react', 'canvas-confetti', 'clsx', 'tailwind-merge'],
+          'vendor-utils': ['jszip'],
         },
       },
     },

@@ -14,6 +14,7 @@ import { ClassDetailPage } from './features/classes/ClassDetailPage';
 import { GameLobbyPage } from './features/games/GameLobbyPage';
 import { GamePlayPage } from './features/games/GamePlayPage';
 import { GameStudioPage } from './features/games/GameStudioPage';
+import { CustomGamePlayerPage } from './features/games/custom/CustomGamePlayerPage';
 import { LeaderboardPage } from './features/analytics/LeaderboardPage';
 import { StudentProfilePage } from './features/analytics/StudentProfilePage';
 import { LoginPage } from './features/auth/LoginPage';
@@ -40,6 +41,7 @@ export const App: React.FC = () => {
 
               {/* Game Arena & Studio */}
               <Route path="/games" element={<GameLobbyPage />} />
+              <Route path="/games/custom/:gameId" element={<CustomGamePlayerPage />} />
               <Route path="/play" element={<GamePlayPage />} />
               <Route path="/studio" element={<GameStudioPage />} />
 

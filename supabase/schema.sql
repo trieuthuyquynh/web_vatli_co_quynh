@@ -439,3 +439,71 @@ INSERT INTO public.badges (title, description, icon, criteria_type, criteria_val
 ('Nhà Bác Học Nguyên Tử', 'Đạt 1500 XP và chuỗi 3 ngày học', 'Atom', 'xp', 1500),
 ('Kỉ Lục Gia 10 Điểm', 'Đạt 5 lần điểm 10 trắc nghiệm', 'Trophy', 'score_10', 5)
 ON CONFLICT DO NOTHING;
+
+-- ====================================================================
+-- 15. EXPANDED GAMES SUITE (GAME-01 -> GAME-10)
+-- ====================================================================
+
+-- 15.1 BẢNG TRÒ CHƠI MỞ RỘNG (iFrame, HTML5 ZIP, Mini Games)
+CREATE TABLE IF NOT EXISTS public.custom_games (
+    id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    description TEXT,
+    game_type TEXT NOT NULL, -- 'iframe', 'html5_zip', 'memory_card', 'crossword', 'lucky_wheel'
+    embed_url TEXT,
+    zip_blob_url TEXT,
+    zip_file_name TEXT,
+    teacher_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    lesson_id UUID REFERENCES public.lessons(id) ON DELETE SET NULL,
+    chapter_id UUID REFERENCES public.chapters(id) ON DELETE SET NULL,
+    class_id UUID REFERENCES public.classes(id) ON DELETE SET NULL,
+    max_attempts INTEGER NOT NULL DEFAULT -1, -- -1: Không giới hạn
+    time_limit INTEGER DEFAULT 180,
+    thumbnail_url TEXT,
+    game_config JSONB DEFAULT '{}'::jsonb,
+    likes_count INTEGER NOT NULL DEFAULT 0,
+    avg_rating NUMERIC(3,2) NOT NULL DEFAULT 5.0,
+    rating_count INTEGER NOT NULL DEFAULT 0,
+    play_count INTEGER NOT NULL DEFAULT 0,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- 15.2 BẢNG LƯỢT CHƠI & ĐIỂM SỐ GAME (GAME-04, GAME-05, GAME-06, GAME-08)
+CREATE TABLE IF NOT EXISTS public.custom_game_attempts (
+    id TEXT PRIMARY KEY,
+    game_id TEXT NOT NULL REFERENCES public.custom_games(id) ON DELETE CASCADE,
+    student_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+    score NUMERIC(4,2) NOT NULL DEFAULT 0,
+    max_score NUMERIC(4,2) NOT NULL DEFAULT 10,
+    time_spent INTEGER NOT NULL DEFAULT 0,
+    is_practice BOOLEAN NOT NULL DEFAULT FALSE,
+    started_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    completed_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- 15.3 BẢNG ĐÁNH GIÁ & PHẢN HỒI GAME (GAME-10)
+CREATE TABLE IF NOT EXISTS public.game_ratings_feedback (
+    id TEXT PRIMARY KEY,
+    game_id TEXT NOT NULL REFERENCES public.custom_games(id) ON DELETE CASCADE,
+    student_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+    rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
+    comment TEXT,
+    is_liked BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- KÍCH HOẠT RLS CHO CÁC BẢNG GAME MỚI
+ALTER TABLE public.custom_games ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.custom_game_attempts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.game_ratings_feedback ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Mọi người đều có thể xem game hoạt động" ON public.custom_games FOR SELECT USING (is_active = true);
+CREATE POLICY "Giáo viên và Admin có thể quản lý game" ON public.custom_games FOR ALL USING (auth.uid() = teacher_id OR auth.uid() IN (SELECT id FROM public.profiles WHERE role = 'admin'));
+
+CREATE POLICY "Mọi người xem được lịch sử và BXH" ON public.custom_game_attempts FOR SELECT USING (true);
+CREATE POLICY "Học sinh có thể nộp lượt chơi" ON public.custom_game_attempts FOR INSERT WITH CHECK (auth.uid() = student_id);
+
+CREATE POLICY "Mọi người xem feedback game" ON public.game_ratings_feedback FOR SELECT USING (true);
+CREATE POLICY "Học sinh gửi feedback game" ON public.game_ratings_feedback FOR INSERT WITH CHECK (auth.uid() = student_id);
+

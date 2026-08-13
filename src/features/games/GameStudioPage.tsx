@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { gamesService } from '../../services/gamesService';
+import { customGamesService } from '../../services/customGamesService';
 import { curriculumService } from '../../services/curriculumService';
-import { Question, Lesson, QuestionType, DifficultyLevel } from '../../types';
+import { Question, Lesson, QuestionType, DifficultyLevel, CustomGame } from '../../types';
 import { MathRenderer } from '../../components/common/MathRenderer';
 import { LoadingSpinner } from '../../components/common/LoadingSpinner';
+import { CreateEmbedGameModal } from './studio/CreateEmbedGameModal';
+import { CreateHtml5ZipGameModal } from './studio/CreateHtml5ZipGameModal';
+import { CreateMiniGameModal } from './studio/CreateMiniGameModal';
 import { 
   PlusCircle, 
   Sparkles, 
@@ -15,16 +19,26 @@ import {
   Eye, 
   Save, 
   Key,
-  BookOpen
+  BookOpen,
+  Globe,
+  FileArchive,
+  RotateCw,
+  Gamepad2
 } from 'lucide-react';
 
 export const GameStudioPage: React.FC = () => {
   const { user } = useAuth();
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [customGames, setCustomGames] = useState<CustomGame[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Form State
+  // Modals for Custom Games
+  const [showEmbedModal, setShowEmbedModal] = useState(false);
+  const [showZipModal, setShowZipModal] = useState(false);
+  const [showMiniGameModal, setShowMiniGameModal] = useState(false);
+
+  // Form State for Question
   const [lessonId, setLessonId] = useState('');
   const [type, setType] = useState<QuestionType>('multiple_choice');
   const [difficulty, setDifficulty] = useState<DifficultyLevel>('medium');
@@ -49,13 +63,15 @@ export const GameStudioPage: React.FC = () => {
   const loadData = async () => {
     setLoading(true);
     try {
-      const [lss, qs] = await Promise.all([
+      const [lss, qs, cgs] = await Promise.all([
         curriculumService.getLessonsByChapter(),
-        gamesService.getQuestions()
+        gamesService.getQuestions(),
+        customGamesService.getCustomGames()
       ]);
       setLessons(lss);
       setQuestions(qs);
-      if (lss.length > 0) setLessonId(lss[0].id);
+      setCustomGames(cgs);
+      if (lss.length > 0 && !lessonId) setLessonId(lss[0].id);
     } finally {
       setLoading(false);
     }
@@ -101,11 +117,10 @@ export const GameStudioPage: React.FC = () => {
         content: content.trim(),
         options: formattedOptions,
         correct_answer: formattedCorrect,
-        explanation: explanation.trim() || undefined
+        explanation: explanation.trim()
       });
 
-      setMsg('Đã lưu câu hỏi thành công vào ngân hàng đề!');
-      setTimeout(() => setMsg(null), 3000);
+      setMsg('Đã thêm câu hỏi mới vào Ngân hàng đề thành công!');
       setContent('');
       setExplanation('');
       loadData();
@@ -114,301 +129,317 @@ export const GameStudioPage: React.FC = () => {
     }
   };
 
+  if (loading && lessons.length === 0) {
+    return <LoadingSpinner text="Đang tải Game Studio..." />;
+  }
+
   return (
-    <div className="space-y-10 pb-16 max-w-5xl mx-auto">
-      {/* Header */}
-      <div className="space-y-2">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-sky-50 text-sky-800 border border-sky-200">
-          <Sparkles className="w-3.5 h-3.5 text-sky-600" /> Physics Game Studio • Soạn Đề Tương Tác
+    <div className="space-y-8 pb-16">
+      
+      {/* Top Banner */}
+      <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200/90 shadow-soft flex flex-wrap items-center justify-between gap-6">
+        <div className="space-y-2 max-w-xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-sky-50 text-sky-700 border border-sky-200">
+            <Gamepad2 className="w-3.5 h-3.5 text-sky-600" />
+            <span>GAME CREATOR STUDIO</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            Xưởng Sáng Tạo & Biên Soạn Trò Chơi
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Dành cho Giáo viên: Soạn câu hỏi trắc nghiệm 3 dạng, nhúng game tương tác Wordwall/PhET, upload game HTML5 ZIP hoặc tạo mini game Lật thẻ, Ô chữ, Vòng quay.
+          </p>
         </div>
-        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
-          Studio Quản Lý Câu Hỏi & Tạo Trò Chơi
-        </h1>
-        <p className="text-xs sm:text-sm text-slate-600">
-          Dành cho Thầy/Cô biên soạn ngân hàng câu hỏi chuẩn SGK Vật Lí 12 KNTT với 3 dạng: Trắc nghiệm 4 đáp án, Đúng/Sai 4 ý và Ghép cặp nối từ. Hỗ trợ hiển thị công thức LaTeX trực quan.
-        </p>
+
+        {/* 3 Action Buttons for GAME-01, GAME-02, GAME-09 */}
+        <div className="flex flex-wrap gap-2.5">
+          <button
+            onClick={() => setShowEmbedModal(true)}
+            className="px-4 py-2.5 rounded-xl text-xs font-bold bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 transition flex items-center gap-1.5 active:scale-95"
+          >
+            <Globe className="w-4 h-4 text-sky-600" />
+            <span>+ Nhúng Game Ngoại Bang</span>
+          </button>
+
+          <button
+            onClick={() => setShowZipModal(true)}
+            className="px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 transition flex items-center gap-1.5 active:scale-95"
+          >
+            <FileArchive className="w-4 h-4 text-emerald-600" />
+            <span>+ Upload Game HTML5 (.ZIP)</span>
+          </button>
+
+          <button
+            onClick={() => setShowMiniGameModal(true)}
+            className="px-4 py-2.5 rounded-xl text-xs font-bold bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 transition flex items-center gap-1.5 active:scale-95"
+          >
+            <Sparkles className="w-4 h-4 text-purple-600" />
+            <span>+ Tạo Mini Game (3 Mẫu)</span>
+          </button>
+        </div>
       </div>
 
       {msg && (
-        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-bold flex items-center gap-2">
-          <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-          <span>{msg}</span>
+        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+            <span>{msg}</span>
+          </div>
+          <button onClick={() => setMsg(null)} className="text-slate-400 hover:text-slate-600">✕</button>
         </div>
       )}
 
-      {/* Creation Form */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200/90 shadow-soft space-y-6">
-        <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-          <PlusCircle className="w-5 h-5 text-sky-600" />
-          <span>Biên Soạn Câu Hỏi Mới</span>
-        </h2>
-
-        <form onSubmit={handleCreateQuestion} className="space-y-5">
-          
-          {/* Metadata selectors */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700 uppercase">Bài Học SGK</label>
-              <select
-                value={lessonId}
-                onChange={(e) => setLessonId(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"
-              >
-                {lessons.map(ls => (
-                  <option key={ls.id} value={ls.id}>
-                    Bài {ls.number}: {ls.title}
-                  </option>
-                ))}
-              </select>
+      {/* Main Studio Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* Left: Question Creator Form */}
+        <div className="lg:col-span-2 space-y-6">
+          <form onSubmit={handleCreateQuestion} className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-soft space-y-5">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+              <h2 className="text-sm sm:text-base font-extrabold text-slate-900 flex items-center gap-2">
+                <PlusCircle className="w-4 h-4 text-sky-600" />
+                <span>Soạn Câu Hỏi Trắc Nghiệm Vật Lí:</span>
+              </h2>
             </div>
 
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700 uppercase">Dạng Câu Hỏi</label>
-              <select
-                value={type}
-                onChange={(e) => setType(e.target.value as QuestionType)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"
-              >
-                <option value="multiple_choice">1. Trắc nghiệm 4 đáp án</option>
-                <option value="true_false">2. Câu hỏi Đúng / Sai 4 ý THPT</option>
-                <option value="matching">3. Đấu ghép nối công thức</option>
-              </select>
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700 uppercase">Mức Độ Nhận Thức</label>
-              <select
-                value={difficulty}
-                onChange={(e) => setDifficulty(e.target.value as DifficultyLevel)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"
-              >
-                <option value="easy">Nhận biết / Thông hiểu (Dễ)</option>
-                <option value="medium">Vận dụng (Trung bình)</option>
-                <option value="hard">Vận dụng cao (Khó)</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Question Content */}
-          <div className="space-y-1">
-            <label className="text-xs font-bold text-slate-700 uppercase flex items-center justify-between">
-              <span>Đề bài câu hỏi (Hỗ trợ LaTeX công thức trong dấu $...$) *</span>
-              <span className="text-[11px] text-sky-700 font-mono">VD: Cho khối khí $pV=nRT$</span>
-            </label>
-            <textarea
-              required
-              rows={3}
-              placeholder="Nhập nội dung đề bài tại đây..."
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"
-            />
-          </div>
-
-          {/* Live Preview Box */}
-          {content && (
-            <div className="p-4 rounded-2xl bg-sky-50/70 border border-sky-200 text-xs text-slate-800 space-y-1">
-              <div className="flex items-center gap-1.5 text-sky-700 font-bold text-[11px] uppercase">
-                <Eye className="w-3.5 h-3.5" /> Xem trước hiển thị công thức:
+            {/* Select Lesson & Type */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Gắn Bài Học SGK</label>
+                <select
+                  value={lessonId}
+                  onChange={(e) => setLessonId(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs font-bold text-slate-800 focus:outline-none focus:border-sky-500"
+                >
+                  {lessons.map(l => (
+                    <option key={l.id} value={l.id}>
+                      Bài {l.number}: {l.title}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <div className="text-sm font-medium">
-                <MathRenderer content={content} />
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Dạng Câu Hỏi</label>
+                <select
+                  value={type}
+                  onChange={(e) => setType(e.target.value as QuestionType)}
+                  className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs font-bold text-slate-800 focus:outline-none focus:border-sky-500"
+                >
+                  <option value="multiple_choice">1. Trắc nghiệm 4 đáp án</option>
+                  <option value="true_false">2. Câu hỏi Đúng / Sai</option>
+                  <option value="matching">3. Nối cặp đôi công thức</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Độ Khó</label>
+                <select
+                  value={difficulty}
+                  onChange={(e) => setDifficulty(e.target.value as DifficultyLevel)}
+                  className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs font-bold text-slate-800 focus:outline-none focus:border-sky-500"
+                >
+                  <option value="easy">Nhận biết / Dễ</option>
+                  <option value="medium">Thông hiểu / Vừa</option>
+                  <option value="hard">Vận dụng / Khó</option>
+                </select>
               </div>
             </div>
-          )}
 
-          {/* Dynamic Option Inputs based on Type */}
-          {type === 'multiple_choice' && (
-            <div className="space-y-3 pt-2">
-              <div className="text-xs font-bold text-slate-700 uppercase">
-                Nhập 4 phương án lựa chọn và tích chọn đáp án đúng:
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {['A', 'B', 'C', 'D'].map((letter, idx) => (
-                  <div key={letter} className="flex items-center gap-2.5 p-3 rounded-2xl bg-slate-50 border border-slate-200">
+            {/* Question Content */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1">
+                Nội Dung Đề Bài (Hỗ trợ công thức LaTeX trong dấu $...$)
+              </label>
+              <textarea
+                rows={3}
+                placeholder="VD: Một lượng khí lí tưởng biến đổi theo phương trình $pV = nRT$... Hãy tính..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"
+                required
+              />
+            </div>
+
+            {/* Dynamic Options Editor */}
+            {type === 'multiple_choice' && (
+              <div className="space-y-3 pt-2">
+                <span className="text-xs font-bold text-slate-700">4 Phương án A, B, C, D:</span>
+                {['A', 'B', 'C', 'D'].map((opt, idx) => (
+                  <div key={opt} className="flex items-center gap-2">
                     <input
                       type="radio"
                       name="mc_correct"
-                      checked={mcCorrect === letter}
-                      onChange={() => setMcCorrect(letter)}
+                      checked={mcCorrect === opt}
+                      onChange={() => setMcCorrect(opt)}
                       className="w-4 h-4 text-sky-600 focus:ring-sky-500"
                     />
-                    <span className="font-black text-xs text-sky-700 w-4">{letter}.</span>
+                    <span className="w-6 font-bold text-xs text-slate-700">{opt}.</span>
                     <input
                       type="text"
-                      placeholder={`Nội dung đáp án ${letter}...`}
-                      value={mcOptions[idx]}
+                      placeholder={`Nội dung phương án ${opt}...`}
+                      value={mcOptions[idx] || ''}
                       onChange={(e) => {
-                        const copy = [...mcOptions];
-                        copy[idx] = e.target.value;
-                        setMcOptions(copy);
+                        const updated = [...mcOptions];
+                        updated[idx] = e.target.value;
+                        setMcOptions(updated);
                       }}
-                      className="w-full bg-transparent text-xs text-slate-900 placeholder-slate-400 focus:outline-none"
+                      className="flex-1 px-3 py-1.5 rounded-xl border border-slate-300 text-xs"
+                      required
                     />
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            )}
 
-          {type === 'true_false' && (
-            <div className="space-y-3 pt-2">
-              <div className="text-xs font-bold text-slate-700 uppercase">
-                Nhập 4 nhận định (a, b, c, d) và chọn tính Đúng/Sai:
-              </div>
-              <div className="space-y-2">
+            {type === 'true_false' && (
+              <div className="space-y-3 pt-2">
+                <span className="text-xs font-bold text-slate-700">4 Nhận định a, b, c, d:</span>
                 {['a', 'b', 'c', 'd'].map((letter, idx) => (
-                  <div key={letter} className="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-200">
-                    <span className="font-bold text-xs text-amber-700 w-5">{letter})</span>
+                  <div key={letter} className="flex items-center gap-2">
+                    <span className="w-5 font-bold text-xs text-slate-700">{letter})</span>
                     <input
                       type="text"
-                      placeholder={`Nội dung nhận định ${letter}...`}
-                      value={tfStatements[idx]}
+                      placeholder={`Nhận định ${letter}...`}
+                      value={tfStatements[idx] || ''}
                       onChange={(e) => {
-                        const copy = [...tfStatements];
-                        copy[idx] = e.target.value;
-                        setTfStatements(copy);
+                        const updated = [...tfStatements];
+                        updated[idx] = e.target.value;
+                        setTfStatements(updated);
                       }}
-                      className="flex-1 bg-transparent text-xs text-slate-900 placeholder-slate-400 focus:outline-none"
+                      className="flex-1 px-3 py-1.5 rounded-xl border border-slate-300 text-xs"
+                      required
                     />
-                    <div className="flex items-center gap-1.5">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const copy = [...tfCorrect];
-                          copy[idx] = true;
-                          setTfCorrect(copy);
-                        }}
-                        className={`px-3 py-1 rounded-xl text-[11px] font-bold transition ${
-                          tfCorrect[idx] === true ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600 border border-slate-200'
-                        }`}
-                      >
-                        ĐÚNG
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const copy = [...tfCorrect];
-                          copy[idx] = false;
-                          setTfCorrect(copy);
-                        }}
-                        className={`px-3 py-1 rounded-xl text-[11px] font-bold transition ${
-                          tfCorrect[idx] === false ? 'bg-rose-600 text-white' : 'bg-white text-slate-600 border border-slate-200'
-                        }`}
-                      >
-                        SAI
-                      </button>
-                    </div>
+                    <select
+                      value={tfCorrect[idx] ? 'true' : 'false'}
+                      onChange={(e) => {
+                        const updated = [...tfCorrect];
+                        updated[idx] = e.target.value === 'true';
+                        setTfCorrect(updated);
+                      }}
+                      className="px-2 py-1 rounded-lg border text-xs font-bold"
+                    >
+                      <option value="true">ĐÚNG</option>
+                      <option value="false">SAI</option>
+                    </select>
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            )}
 
-          {type === 'matching' && (
-            <div className="space-y-3 pt-2">
-              <div className="text-xs font-bold text-slate-700 uppercase">
-                Nhập 4 cặp ghép tương ứng (Vế Trái sẽ khớp với Vế Phải cùng dòng):
-              </div>
-              <div className="space-y-2">
-                {[1, 2, 3, 4].map((num, idx) => (
-                  <div key={num} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="flex items-center gap-2 p-3 rounded-2xl bg-slate-50 border border-slate-200">
-                      <span className="font-bold text-xs text-sky-700">L{num}:</span>
-                      <input
-                        type="text"
-                        placeholder={`Vế trái ${num} (Khái niệm)...`}
-                        value={matchLeft[idx]}
-                        onChange={(e) => {
-                          const copy = [...matchLeft];
-                          copy[idx] = e.target.value;
-                          setMatchLeft(copy);
-                        }}
-                        className="w-full bg-transparent text-xs text-slate-900 placeholder-slate-400 focus:outline-none"
-                      />
-                    </div>
-
-                    <div className="flex items-center gap-2 p-3 rounded-2xl bg-slate-50 border border-slate-200">
-                      <span className="font-bold text-xs text-indigo-700">R{num}:</span>
-                      <input
-                        type="text"
-                        placeholder={`Vế phải ${num} (Công thức tương ứng)...`}
-                        value={matchRight[idx]}
-                        onChange={(e) => {
-                          const copy = [...matchRight];
-                          copy[idx] = e.target.value;
-                          setMatchRight(copy);
-                        }}
-                        className="w-full bg-transparent text-xs text-slate-900 placeholder-slate-400 focus:outline-none"
-                      />
-                    </div>
+            {type === 'matching' && (
+              <div className="space-y-3 pt-2">
+                <span className="text-xs font-bold text-slate-700">Ghép Cột A với Cột B:</span>
+                {[0, 1, 2, 3].map(idx => (
+                  <div key={idx} className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-slate-400">L{idx + 1}:</span>
+                    <input
+                      type="text"
+                      placeholder={`Vế trái L${idx + 1}...`}
+                      value={matchLeft[idx] || ''}
+                      onChange={(e) => {
+                        const updated = [...matchLeft];
+                        updated[idx] = e.target.value;
+                        setMatchLeft(updated);
+                      }}
+                      className="flex-1 px-3 py-1.5 rounded-xl border border-slate-300 text-xs"
+                    />
+                    <span className="text-xs font-bold text-slate-400">➔ R{idx + 1}:</span>
+                    <input
+                      type="text"
+                      placeholder={`Vế phải R${idx + 1}...`}
+                      value={matchRight[idx] || ''}
+                      onChange={(e) => {
+                        const updated = [...matchRight];
+                        updated[idx] = e.target.value;
+                        setMatchRight(updated);
+                      }}
+                      className="flex-1 px-3 py-1.5 rounded-xl border border-slate-300 text-xs"
+                    />
                   </div>
                 ))}
               </div>
+            )}
+
+            {/* Explanation */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1">
+                Lời Giải Chi Tiết / Hướng Dẫn Tư Duy
+              </label>
+              <textarea
+                rows={2}
+                placeholder="Giải thích từng bước, nhắc lại công thức SGK..."
+                value={explanation}
+                onChange={(e) => setExplanation(e.target.value)}
+                className="w-full px-3.5 py-2 rounded-xl border border-slate-300 bg-white text-xs text-slate-800 focus:outline-none focus:border-sky-500"
+              />
             </div>
-          )}
 
-          {/* Explanation */}
-          <div className="space-y-1 pt-1">
-            <label className="text-xs font-bold text-slate-700 uppercase">
-              Lời giải thích chi tiết & Phương pháp giải
-            </label>
-            <textarea
-              rows={2}
-              placeholder="VD: Áp dụng định luật I nhiệt động lực học: $\Delta U = A + Q$..."
-              value={explanation}
-              onChange={(e) => setExplanation(e.target.value)}
-              className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"
-            />
-          </div>
-
-          {/* Submit */}
-          <div className="flex justify-end pt-2">
-            <button
-              type="submit"
-              className="px-6 py-3 rounded-2xl font-bold text-xs bg-sky-600 hover:bg-sky-500 text-white shadow-md shadow-sky-600/20 transition flex items-center gap-2 active:scale-95"
-            >
-              <Save className="w-4 h-4" />
-              <span>Lưu Câu Hỏi Vào Ngân Hàng Đề</span>
-            </button>
-          </div>
-
-        </form>
-      </div>
-
-      {/* Existing Questions List */}
-      <div className="space-y-4">
-        <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-sky-600" />
-          <span>Ngân Hàng Câu Hỏi Hiện Có ({questions.length} câu)</span>
-        </h2>
-
-        <div className="space-y-3">
-          {questions.map((q, idx) => (
-            <div
-              key={q.id}
-              className="p-5 rounded-3xl bg-white border border-slate-200/90 shadow-soft space-y-2 hover:border-sky-300 transition"
-            >
-              <div className="flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-slate-400">#{idx + 1}</span>
-                  <span className="px-2.5 py-0.5 rounded-lg text-[10px] font-black bg-sky-50 text-sky-800 border border-sky-200 uppercase">
-                    {q.type}
-                  </span>
-                  <span className="px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
-                    {q.difficulty}
-                  </span>
-                </div>
-              </div>
-
-              <div className="text-sm font-semibold text-slate-900 leading-relaxed">
-                <MathRenderer content={q.content} />
-              </div>
+            <div className="pt-2 flex justify-end">
+              <button
+                type="submit"
+                className="px-6 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-sm transition flex items-center gap-1.5 active:scale-95"
+              >
+                <Save className="w-4 h-4" />
+                <span>Lưu Vào Ngân Hàng Đề</span>
+              </button>
             </div>
-          ))}
+          </form>
         </div>
+
+        {/* Right: Quick List & Overview */}
+        <div className="space-y-6">
+          <div className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-soft space-y-4">
+            <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-sky-600" />
+              <span>Trò Chơi Đã Tạo ({customGames.length})</span>
+            </h3>
+
+            <div className="space-y-2.5 max-h-96 overflow-y-auto pr-1">
+              {customGames.map(g => (
+                <div key={g.id} className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-sky-100 text-sky-700">
+                      {g.game_type}
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-mono">
+                      {g.play_count} lượt chơi
+                    </span>
+                  </div>
+                  <h4 className="text-xs font-bold text-slate-800 truncate">{g.title}</h4>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
       </div>
+
+      {/* Modals for 10 Game Features */}
+      <CreateEmbedGameModal
+        isOpen={showEmbedModal}
+        onClose={() => setShowEmbedModal(false)}
+        lessons={lessons}
+        teacherId={user?.id || 'teacher-quynh'}
+        onCreated={() => loadData()}
+      />
+
+      <CreateHtml5ZipGameModal
+        isOpen={showZipModal}
+        onClose={() => setShowZipModal(false)}
+        lessons={lessons}
+        teacherId={user?.id || 'teacher-quynh'}
+        onCreated={() => loadData()}
+      />
+
+      <CreateMiniGameModal
+        isOpen={showMiniGameModal}
+        onClose={() => setShowMiniGameModal(false)}
+        lessons={lessons}
+        teacherId={user?.id || 'teacher-quynh'}
+        onCreated={() => loadData()}
+      />
+
     </div>
   );
 };
-
