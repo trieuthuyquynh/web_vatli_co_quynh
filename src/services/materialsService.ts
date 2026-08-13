@@ -9,7 +9,7 @@ export const materialsService = {
       const list: Material[] = stored ? JSON.parse(stored) : [
         {
           id: 'mat-1',
-          lesson_id: 'l1111111-1111-1111-1111-111111111101',
+          lesson_id: 'b1111111-1111-1111-1111-111111111101',
           teacher_id: 'teacher-quynh',
           title: 'Tóm tắt Sơ đồ tư duy Cấu trúc chất & Chuyển thể',
           type: 'pdf',
@@ -20,7 +20,7 @@ export const materialsService = {
         },
         {
           id: 'mat-2',
-          lesson_id: 'l2222222-2222-2222-2222-222222222202',
+          lesson_id: 'b2222222-2222-2222-2222-222222222202',
           teacher_id: 'teacher-quynh',
           title: 'Mô phỏng Thí nghiệm Định luật Boyle (Nén khí đẳng nhiệt)',
           type: 'video',

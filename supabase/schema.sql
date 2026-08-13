@@ -299,52 +299,52 @@ ON CONFLICT (number) DO NOTHING;
 
 -- Seed Lessons (Chương 1)
 INSERT INTO public.lessons (id, chapter_id, number, title, summary, key_formulas) VALUES
-('l1111111-1111-1111-1111-111111111101', 'c1111111-1111-1111-1111-111111111111', 1, 'Bài 1: Cấu trúc của chất. Sự chuyển thể', 'Các thể của chất (rắn, lỏng, khí), mô hình động học phân tử, các quá trình chuyển thể.', '["Thể rắn: Phân tử dao động quanh VTCB", "Thể lỏng: Dao động quanh VTCB dịch chuyển", "Thể khí: Chuyển động hỗn loạn không ngừng"]'::jsonb),
-('l1111111-1111-1111-1111-111111111102', 'c1111111-1111-1111-1111-111111111111', 2, 'Bài 2: Nội năng. Định luật I của nhiệt động lực học', 'Khái niệm nội năng, các cách làm biến đổi nội năng (thực hiện công, truyền nhiệt), định luật I NĐLH.', '["\\Delta U = A + Q", "Q > 0: Nhận nhiệt lượng", "A > 0: Nhận công"]'::jsonb),
-('l1111111-1111-1111-1111-111111111103', 'c1111111-1111-1111-1111-111111111111', 3, 'Bài 3: Nhiệt độ. Thang nhiệt độ - nhiệt kế', 'Trạng thái cân bằng nhiệt, thang nhiệt độ Celsius và Kelvin.', '["T(K) = t(^\\circ C) + 273.15", "\\Delta T(K) = \\Delta t(^\\circ C)"]'::jsonb),
-('l1111111-1111-1111-1111-111111111104', 'c1111111-1111-1111-1111-111111111111', 4, 'Bài 4: Nhiệt dung riêng, nhiệt nóng chảy riêng, nhiệt hoá hơi riêng', 'Định nghĩa và công thức tính nhiệt lượng trong các quá trình truyền nhiệt và chuyển thể.', '["Q = m c \\Delta t", "Q = \\lambda m", "Q = L m"]'::jsonb)
+('b1111111-1111-1111-1111-111111111101', 'c1111111-1111-1111-1111-111111111111', 1, 'Bài 1: Cấu trúc của chất. Sự chuyển thể', 'Các thể của chất (rắn, lỏng, khí), mô hình động học phân tử, các quá trình chuyển thể.', '["Thể rắn: Phân tử dao động quanh VTCB", "Thể lỏng: Dao động quanh VTCB dịch chuyển", "Thể khí: Chuyển động hỗn loạn không ngừng"]'::jsonb),
+('b1111111-1111-1111-1111-111111111102', 'c1111111-1111-1111-1111-111111111111', 2, 'Bài 2: Nội năng. Định luật I của nhiệt động lực học', 'Khái niệm nội năng, các cách làm biến đổi nội năng (thực hiện công, truyền nhiệt), định luật I NĐLH.', '["\\Delta U = A + Q", "Q > 0: Nhận nhiệt lượng", "A > 0: Nhận công"]'::jsonb),
+('b1111111-1111-1111-1111-111111111103', 'c1111111-1111-1111-1111-111111111111', 3, 'Bài 3: Nhiệt độ. Thang nhiệt độ - nhiệt kế', 'Trạng thái cân bằng nhiệt, thang nhiệt độ Celsius và Kelvin.', '["T(K) = t(^\\circ C) + 273.15", "\\Delta T(K) = \\Delta t(^\\circ C)"]'::jsonb),
+('b1111111-1111-1111-1111-111111111104', 'c1111111-1111-1111-1111-111111111111', 4, 'Bài 4: Nhiệt dung riêng, nhiệt nóng chảy riêng, nhiệt hoá hơi riêng', 'Định nghĩa và công thức tính nhiệt lượng trong các quá trình truyền nhiệt và chuyển thể.', '["Q = m c \\Delta t", "Q = \\lambda m", "Q = L m"]'::jsonb)
 ON CONFLICT (chapter_id, number) DO NOTHING;
 
 -- Seed Lessons (Chương 2)
 INSERT INTO public.lessons (id, chapter_id, number, title, summary, key_formulas) VALUES
-('l2222222-2222-2222-2222-222222222201', 'c2222222-2222-2222-2222-222222222222', 8, 'Bài 8: Mô hình động học phân tử chất khí', 'Khí lí tưởng, chuyển động Brown, va chạm đàn hồi của phân tử khí với thành bình.', '["Phân tử khí coi là chất điểm", "Tương tác chỉ khi va chạm"]'::jsonb),
-('l2222222-2222-2222-2222-222222222202', 'c2222222-2222-2222-2222-222222222222', 9, 'Bài 9: Định luật Boyle (Đẳng nhiệt)', 'Quá trình đẳng nhiệt của một lượng khí lí tưởng xác định.', '["p_1 V_1 = p_2 V_2 = \\text{hằng số}", "p \\sim \\frac{1}{V}"]'::jsonb),
-('l2222222-2222-2222-2222-222222222203', 'c2222222-2222-2222-2222-222222222222', 10, 'Bài 10: Định luật Charles (Đẳng áp)', 'Quá trình đẳng áp của một lượng khí lí tưởng xác định.', '["\\frac{V_1}{T_1} = \\frac{V_2}{T_2} = \\text{hằng số}", "V \\sim T"]'::jsonb),
-('l2222222-2222-2222-2222-222222222204', 'c2222222-2222-2222-2222-222222222222', 11, 'Bài 11: Phương trình trạng thái khí lí tưởng', 'Phương trình Clapeyron - Mendeleev và phương trình trạng thái khí lí tưởng.', '["\\frac{p V}{T} = \\text{const}", "p V = n R T = \\frac{m}{M} R T"]'::jsonb)
+('b2222222-2222-2222-2222-222222222201', 'c2222222-2222-2222-2222-222222222222', 8, 'Bài 8: Mô hình động học phân tử chất khí', 'Khí lí tưởng, chuyển động Brown, va chạm đàn hồi của phân tử khí với thành bình.', '["Phân tử khí coi là chất điểm", "Tương tác chỉ khi va chạm"]'::jsonb),
+('b2222222-2222-2222-2222-222222222202', 'c2222222-2222-2222-2222-222222222222', 9, 'Bài 9: Định luật Boyle (Đẳng nhiệt)', 'Quá trình đẳng nhiệt của một lượng khí lí tưởng xác định.', '["p_1 V_1 = p_2 V_2 = \\text{hằng số}", "p \\sim \\frac{1}{V}"]'::jsonb),
+('b2222222-2222-2222-2222-222222222203', 'c2222222-2222-2222-2222-222222222222', 10, 'Bài 10: Định luật Charles (Đẳng áp)', 'Quá trình đẳng áp của một lượng khí lí tưởng xác định.', '["\\frac{V_1}{T_1} = \\frac{V_2}{T_2} = \\text{hằng số}", "V \\sim T"]'::jsonb),
+('b2222222-2222-2222-2222-222222222204', 'c2222222-2222-2222-2222-222222222222', 11, 'Bài 11: Phương trình trạng thái khí lí tưởng', 'Phương trình Clapeyron - Mendeleev và phương trình trạng thái khí lí tưởng.', '["\\frac{p V}{T} = \\text{const}", "p V = n R T = \\frac{m}{M} R T"]'::jsonb)
 ON CONFLICT (chapter_id, number) DO NOTHING;
 
 -- Seed Lessons (Chương 3)
 INSERT INTO public.lessons (id, chapter_id, number, title, summary, key_formulas) VALUES
-('l3333333-3333-3333-3333-333333333301', 'c3333333-3333-3333-3333-333333333333', 14, 'Bài 14: Từ trường', 'Từ trường của các dòng điện có dạng đặc biệt, đường sức từ, từ phổ.', '["Đường sức từ kín", "Vào Nam ra Bắc"]'::jsonb),
-('l3333333-3333-3333-3333-333333333302', 'c3333333-3333-3333-3333-333333333333', 15, 'Bài 15: Lực từ. Cảm ứng từ', 'Lực từ tác dụng lên đoạn dây dẫn mang dòng điện, quy tắc bàn tay trái.', '["F = B I L \\sin\\alpha", "1\\text{ Tesla (T)} = 1\\text{ N}/(\\text{A}\\cdot\\text{m})"]'::jsonb),
-('l3333333-3333-3333-3333-333333333303', 'c3333333-3333-3333-3333-333333333333', 16, 'Bài 16: Hiện tượng cảm ứng điện từ', 'Từ thông, định luật Faraday về cảm ứng điện từ, định luật Lenz.', '["\\Phi = B S \\cos\\alpha", "e_c = -\\frac{\\Delta\\Phi}{\\Delta t}"]'::jsonb)
+('b3333333-3333-3333-3333-333333333301', 'c3333333-3333-3333-3333-333333333333', 14, 'Bài 14: Từ trường', 'Từ trường của các dòng điện có dạng đặc biệt, đường sức từ, từ phổ.', '["Đường sức từ kín", "Vào Nam ra Bắc"]'::jsonb),
+('b3333333-3333-3333-3333-333333333302', 'c3333333-3333-3333-3333-333333333333', 15, 'Bài 15: Lực từ. Cảm ứng từ', 'Lực từ tác dụng lên đoạn dây dẫn mang dòng điện, quy tắc bàn tay trái.', '["F = B I L \\sin\\alpha", "1\\text{ Tesla (T)} = 1\\text{ N}/(\\text{A}\\cdot\\text{m})"]'::jsonb),
+('b3333333-3333-3333-3333-333333333303', 'c3333333-3333-3333-3333-333333333333', 16, 'Bài 16: Hiện tượng cảm ứng điện từ', 'Từ thông, định luật Faraday về cảm ứng điện từ, định luật Lenz.', '["\\Phi = B S \\cos\\alpha", "e_c = -\\frac{\\Delta\\Phi}{\\Delta t}"]'::jsonb)
 ON CONFLICT (chapter_id, number) DO NOTHING;
 
 -- Seed Lessons (Chương 4)
 INSERT INTO public.lessons (id, chapter_id, number, title, summary, key_formulas) VALUES
-('l4444444-4444-4444-4444-444444444401', 'c4444444-4444-4444-4444-444444444444', 19, 'Bài 19: Cấu tạo hạt nhân. Năng lượng liên kết', 'Proton, neutron, độ hụt khối, năng lượng liên kết riêng quyết định độ bền vững.', '["E = m c^2", "\\Delta m = [Z m_p + (A - Z) m_n] - m_X", "W_{lk} = \\Delta m c^2", "W_{lkr} = \\frac{W_{lk}}{A}"]'::jsonb),
-('l4444444-4444-4444-4444-444444444402', 'c4444444-4444-4444-4444-444444444444', 20, 'Bài 20: Phóng xạ', 'Định luật phóng xạ, tia phóng xạ alpha, beta, gamma, chu kì bán rã.', '["N(t) = N_0 2^{-\\frac{t}{T}} = N_0 e^{-\\lambda t}", "\\lambda = \\frac{\\ln 2}{T}"]'::jsonb)
+('b4444444-4444-4444-4444-444444444401', 'c4444444-4444-4444-4444-444444444444', 19, 'Bài 19: Cấu tạo hạt nhân. Năng lượng liên kết', 'Proton, neutron, độ hụt khối, năng lượng liên kết riêng quyết định độ bền vững.', '["E = m c^2", "\\Delta m = [Z m_p + (A - Z) m_n] - m_X", "W_{lk} = \\Delta m c^2", "W_{lkr} = \\frac{W_{lk}}{A}"]'::jsonb),
+('b4444444-4444-4444-4444-444444444402', 'c4444444-4444-4444-4444-444444444444', 20, 'Bài 20: Phóng xạ', 'Định luật phóng xạ, tia phóng xạ alpha, beta, gamma, chu kì bán rã.', '["N(t) = N_0 2^{-\\frac{t}{T}} = N_0 e^{-\\lambda t}", "\\lambda = \\frac{\\ln 2}{T}"]'::jsonb)
 ON CONFLICT (chapter_id, number) DO NOTHING;
 
 -- Seed Real Question Bank (3 Dạng câu hỏi thực tế)
 
 -- 1. Dạng Trắc nghiệm 4 đáp án
 INSERT INTO public.questions (lesson_id, type, content, options, correct_answer, explanation, difficulty) VALUES
-('l1111111-1111-1111-1111-111111111102', 'multiple_choice', 
+('b1111111-1111-1111-1111-111111111102', 'multiple_choice', 
 'Một lượng khí nhận nhiệt lượng $Q = 250\\text{ J}$ và dãn nở sinh công $A'' = 150\\text{ J}$ đẩy pit-tông lên. Theo định luật I nhiệt động lực học, độ biến thiên nội năng $\\Delta U$ của khối khí là bao nhiêu?',
 '["+400 J", "+100 J", "-100 J", "-400 J"]'::jsonb,
 '"B"'::jsonb,
 'Theo quy ước dấu: Khí nhận nhiệt lượng nên $Q = +250\\text{ J}$. Khí sinh công $A'' = 150\\text{ J} \\Rightarrow$ công khí nhận là $A = -150\\text{ J}$. Áp dụng định luật 1: $\\Delta U = A + Q = -150 + 250 = +100\\text{ J}$.',
 'easy'),
 
-('l2222222-2222-2222-2222-222222222202', 'multiple_choice',
+('b2222222-2222-2222-2222-222222222202', 'multiple_choice',
 'Một khối khí lí tưởng xác định có thể tích $V_1 = 4\\text{ lít}$ ở áp suất $p_1 = 1\\text{ bar}$. Nếu nén đẳng nhiệt khối khí đến thể tích $V_2 = 2\\text{ lít}$ thì áp suất $p_2$ của khối khí là:',
 '["0.5 bar", "1.5 bar", "2.0 bar", "4.0 bar"]'::jsonb,
 '"C"'::jsonb,
 'Vì quá trình là đẳng nhiệt ($T = \\text{const}$), theo định luật Boyle ta có: $p_1 V_1 = p_2 V_2 \\Rightarrow p_2 = \\frac{p_1 V_1}{V_2} = \\frac{1 \\times 4}{2} = 2.0\\text{ bar}$.',
 'easy'),
 
-('l4444444-4444-4444-4444-444444444401', 'multiple_choice',
+('b4444444-4444-4444-4444-444444444401', 'multiple_choice',
 'Đại lượng đặc trưng cho mức độ bền vững của một hạt nhân nguyên tử là:',
 '["Năng lượng liên kết", "Năng lượng liên kết riêng", "Độ hụt khối", "Số khối A"]'::jsonb,
 '"B"'::jsonb,
@@ -353,7 +353,7 @@ INSERT INTO public.questions (lesson_id, type, content, options, correct_answer,
 
 -- 2. Dạng Đúng / Sai 4 ý chuẩn THPT
 INSERT INTO public.questions (lesson_id, type, content, options, correct_answer, explanation, difficulty) VALUES
-('l1111111-1111-1111-1111-111111111101', 'true_false',
+('b1111111-1111-1111-1111-111111111101', 'true_false',
 'Khi nói về mô hình cấu trúc của chất và sự chuyển thể theo SGK Vật Lí 12 KNTT, xét tính Đúng / Sai của các nhận định sau:',
 '[
   {"id": "a", "text": "Ở thể rắn, các phân tử dao động quanh các vị trí cân bằng cố định xác định."},
@@ -369,7 +369,7 @@ INSERT INTO public.questions (lesson_id, type, content, options, correct_answer,
 - Ý d (Đúng): $Q = \\lambda m \\Rightarrow \\lambda = \\frac{Q}{m}$ có đơn vị $\\text{J}/\\text{kg}$.',
 'medium'),
 
-('l2222222-2222-2222-2222-222222222204', 'true_false',
+('b2222222-2222-2222-2222-222222222204', 'true_false',
 'Xét một lượng khí lí tưởng xác định biến đổi trạng thái trong xilanh kín. Đánh giá tính Đúng / Sai của các mệnh đề sau:',
 '[
   {"id": "a", "text": "Trong hệ tọa độ $(p, V)$, đường đẳng nhiệt là một nhánh của đường hyperbol."},
@@ -387,7 +387,7 @@ INSERT INTO public.questions (lesson_id, type, content, options, correct_answer,
 
 -- 3. Dạng Nối từ / Ghép cặp (Matching)
 INSERT INTO public.questions (lesson_id, type, content, options, correct_answer, explanation, difficulty) VALUES
-('l4444444-4444-4444-4444-444444444402', 'matching',
+('b4444444-4444-4444-4444-444444444402', 'matching',
 'Hãy ghép đúng loại tia phóng xạ ở Cột A với bản chất và đặc tính tương ứng ở Cột B:',
 '{
   "left": [
@@ -411,7 +411,7 @@ INSERT INTO public.questions (lesson_id, type, content, options, correct_answer,
 - Tia Gamma $\\gamma$: Phôtôn năng lượng cao, không mang điện, đâm xuyên qua bê tông dày.',
 'hard'),
 
-('l1111111-1111-1111-1111-111111111104', 'matching',
+('b1111111-1111-1111-1111-111111111104', 'matching',
 'Hãy ghép các đại lượng nhiệt học ở Cột A với công thức tương ứng ở Cột B:',
 '{
   "left": [

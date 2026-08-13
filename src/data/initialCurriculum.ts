@@ -38,7 +38,7 @@ export const INITIAL_CHAPTERS: Chapter[] = [
 export const INITIAL_LESSONS: Lesson[] = [
   // Chương 1
   {
-    id: 'l1111111-1111-1111-1111-111111111101',
+    id: 'b1111111-1111-1111-1111-111111111101',
     chapter_id: 'c1111111-1111-1111-1111-111111111111',
     number: 1,
     title: 'Bài 1: Cấu trúc của chất. Sự chuyển thể',
@@ -50,7 +50,7 @@ export const INITIAL_LESSONS: Lesson[] = [
     ],
   },
   {
-    id: 'l1111111-1111-1111-1111-111111111102',
+    id: 'b1111111-1111-1111-1111-111111111102',
     chapter_id: 'c1111111-1111-1111-1111-111111111111',
     number: 2,
     title: 'Bài 2: Nội năng. Định luật I của nhiệt động lực học',
@@ -62,7 +62,7 @@ export const INITIAL_LESSONS: Lesson[] = [
     ],
   },
   {
-    id: 'l1111111-1111-1111-1111-111111111103',
+    id: 'b1111111-1111-1111-1111-111111111103',
     chapter_id: 'c1111111-1111-1111-1111-111111111111',
     number: 3,
     title: 'Bài 3: Nhiệt độ. Thang nhiệt độ - nhiệt kế',
@@ -73,7 +73,7 @@ export const INITIAL_LESSONS: Lesson[] = [
     ],
   },
   {
-    id: 'l1111111-1111-1111-1111-111111111104',
+    id: 'b1111111-1111-1111-1111-111111111104',
     chapter_id: 'c1111111-1111-1111-1111-111111111111',
     number: 4,
     title: 'Bài 4: Nhiệt dung riêng, nhiệt nóng chảy riêng, nhiệt hoá hơi riêng',
@@ -87,7 +87,7 @@ export const INITIAL_LESSONS: Lesson[] = [
 
   // Chương 2
   {
-    id: 'l2222222-2222-2222-2222-222222222201',
+    id: 'b2222222-2222-2222-2222-222222222201',
     chapter_id: 'c2222222-2222-2222-2222-222222222222',
     number: 8,
     title: 'Bài 8: Mô hình động học phân tử chất khí',
@@ -98,7 +98,7 @@ export const INITIAL_LESSONS: Lesson[] = [
     ],
   },
   {
-    id: 'l2222222-2222-2222-2222-222222222202',
+    id: 'b2222222-2222-2222-2222-222222222202',
     chapter_id: 'c2222222-2222-2222-2222-222222222222',
     number: 9,
     title: 'Bài 9: Định luật Boyle (Đẳng nhiệt)',
@@ -109,7 +109,7 @@ export const INITIAL_LESSONS: Lesson[] = [
     ],
   },
   {
-    id: 'l2222222-2222-2222-2222-222222222203',
+    id: 'b2222222-2222-2222-2222-222222222203',
     chapter_id: 'c2222222-2222-2222-2222-222222222222',
     number: 10,
     title: 'Bài 10: Định luật Charles (Đẳng áp)',
@@ -120,7 +120,7 @@ export const INITIAL_LESSONS: Lesson[] = [
     ],
   },
   {
-    id: 'l2222222-2222-2222-2222-222222222204',
+    id: 'b2222222-2222-2222-2222-222222222204',
     chapter_id: 'c2222222-2222-2222-2222-222222222222',
     number: 11,
     title: 'Bài 11: Phương trình trạng thái khí lí tưởng',
@@ -133,7 +133,7 @@ export const INITIAL_LESSONS: Lesson[] = [
 
   // Chương 3
   {
-    id: 'l3333333-3333-3333-3333-333333333301',
+    id: 'b3333333-3333-3333-3333-333333333301',
     chapter_id: 'c3333333-3333-3333-3333-333333333333',
     number: 14,
     title: 'Bài 14: Từ trường',
@@ -144,7 +144,7 @@ export const INITIAL_LESSONS: Lesson[] = [
     ],
   },
   {
-    id: 'l3333333-3333-3333-3333-333333333302',
+    id: 'b3333333-3333-3333-3333-333333333302',
     chapter_id: 'c3333333-3333-3333-3333-333333333333',
     number: 15,
     title: 'Bài 15: Lực từ. Cảm ứng từ',
@@ -155,7 +155,7 @@ export const INITIAL_LESSONS: Lesson[] = [
     ],
   },
   {
-    id: 'l3333333-3333-3333-3333-333333333303',
+    id: 'b3333333-3333-3333-3333-333333333303',
     chapter_id: 'c3333333-3333-3333-3333-333333333333',
     number: 16,
     title: 'Bài 16: Hiện tượng cảm ứng điện từ',
@@ -168,7 +168,7 @@ export const INITIAL_LESSONS: Lesson[] = [
 
   // Chương 4
   {
-    id: 'l4444444-4444-4444-4444-444444444401',
+    id: 'b4444444-4444-4444-4444-444444444401',
     chapter_id: 'c4444444-4444-4444-4444-444444444444',
     number: 19,
     title: 'Bài 19: Cấu tạo hạt nhân. Năng lượng liên kết',
@@ -181,7 +181,7 @@ export const INITIAL_LESSONS: Lesson[] = [
     ],
   },
   {
-    id: 'l4444444-4444-4444-4444-444444444402',
+    id: 'b4444444-4444-4444-4444-444444444402',
     chapter_id: 'c4444444-4444-4444-4444-444444444444',
     number: 20,
     title: 'Bài 20: Phóng xạ',
@@ -197,7 +197,7 @@ export const INITIAL_QUESTIONS: Question[] = [
   // 1. TRẮC NGHIỆM 4 ĐÁP ÁN (Multiple Choice)
   {
     id: 'q-mc-1',
-    lesson_id: 'l1111111-1111-1111-1111-111111111102',
+    lesson_id: 'b1111111-1111-1111-1111-111111111102',
     type: 'multiple_choice',
     content: 'Một khối khí lí tưởng nhận nhiệt lượng $Q = 250\\text{ J}$ và dãn nở sinh công $A\' = 150\\text{ J}$ đẩy pit-tông. Theo định luật I nhiệt động lực học, độ biến thiên nội năng $\\Delta U$ của khối khí là:',
     options: ['+400 J', '+100 J', '-100 J', '-400 J'],
@@ -207,7 +207,7 @@ export const INITIAL_QUESTIONS: Question[] = [
   },
   {
     id: 'q-mc-2',
-    lesson_id: 'l2222222-2222-2222-2222-222222222202',
+    lesson_id: 'b2222222-2222-2222-2222-222222222202',
     type: 'multiple_choice',
     content: 'Một khối khí lí tưởng có thể tích $V_1 = 4\\text{ lít}$ ở áp suất $p_1 = 1\\text{ bar}$. Nếu nén đẳng nhiệt khối khí đến thể tích $V_2 = 2\\text{ lít}$ thì áp suất $p_2$ là:',
     options: ['0.5 bar', '1.5 bar', '2.0 bar', '4.0 bar'],
@@ -217,7 +217,7 @@ export const INITIAL_QUESTIONS: Question[] = [
   },
   {
     id: 'q-mc-3',
-    lesson_id: 'l4444444-4444-4444-4444-444444444401',
+    lesson_id: 'b4444444-4444-4444-4444-444444444401',
     type: 'multiple_choice',
     content: 'Đại lượng nào sau đây đặc trưng cho mức độ bền vững của một hạt nhân nguyên tử?',
     options: [
@@ -232,7 +232,7 @@ export const INITIAL_QUESTIONS: Question[] = [
   },
   {
     id: 'q-mc-4',
-    lesson_id: 'l3333333-3333-3333-3333-333333333302',
+    lesson_id: 'b3333333-3333-3333-3333-333333333302',
     type: 'multiple_choice',
     content: 'Một đoạn dây dẫn thẳng dài $L = 0.2\\text{ m}$ mang dòng điện $I = 5\\text{ A}$ đặt vuông góc với các đường sức của một từ trường đều có cảm ứng từ $B = 0.4\\text{ T}$. Lực từ tác dụng lên đoạn dây có độ lớn là:',
     options: ['0.4 N', '0.2 N', '0.8 N', '0.04 N'],
@@ -244,7 +244,7 @@ export const INITIAL_QUESTIONS: Question[] = [
   // 2. ĐÚNG / SAI 4 Ý (True / False Matrix)
   {
     id: 'q-tf-1',
-    lesson_id: 'l1111111-1111-1111-1111-111111111101',
+    lesson_id: 'b1111111-1111-1111-1111-111111111101',
     type: 'true_false',
     content: 'Khi nói về mô hình cấu trúc của chất và sự chuyển thể theo SGK Vật Lí 12 KNTT, xét tính Đúng / Sai của các nhận định sau:',
     options: [
@@ -259,7 +259,7 @@ export const INITIAL_QUESTIONS: Question[] = [
   },
   {
     id: 'q-tf-2',
-    lesson_id: 'l2222222-2222-2222-2222-222222222204',
+    lesson_id: 'b2222222-2222-2222-2222-222222222204',
     type: 'true_false',
     content: 'Xét một lượng khí lí tưởng xác định biến đổi trạng thái trong xilanh kín. Đánh giá tính Đúng / Sai của các mệnh đề sau:',
     options: [
@@ -269,14 +269,14 @@ export const INITIAL_QUESTIONS: Question[] = [
       { id: 'd', text: 'Khi tăng nhiệt độ tuyệt đối của một khối khí lên 2 lần thì động năng tịnh tiến trung bình của phân tử giảm 2 lần.' }
     ],
     correct_answer: [true, true, true, false],
-    explanation: 'Ý a: Đúng ($p \\sim 1/V$). Ý b: Đúng ($\\\\Delta T = \\Delta t$). Ý c: Đúng ($R \\approx 8.314$). Ý d: Sai (Động năng trung bình $\\bar{E_d} = \\frac{3}{2} k T$ tỉ lệ thuận với $T$, khi $T$ tăng 2 lần thì động năng tăng 2 lần).',
+    explanation: 'Ý a: Đúng ($p \\sim 1/V$). Ý b: Đúng ($\\Delta T = \\Delta t$). Ý c: Đúng ($R \\approx 8.314$). Ý d: Sai (Động năng trung bình $\\bar{E_d} = \\frac{3}{2} k T$ tỉ lệ thuận với $T$, khi $T$ tăng 2 lần thì động năng tăng 2 lần).',
     difficulty: 'medium',
   },
 
   // 3. NỐI TỪ / GHÉP CẶP (Matching)
   {
     id: 'q-mat-1',
-    lesson_id: 'l4444444-4444-4444-4444-444444444402',
+    lesson_id: 'b4444444-4444-4444-4444-444444444402',
     type: 'matching',
     content: 'Hãy ghép đúng loại tia phóng xạ ở Cột A với bản chất và đặc tính tương ứng ở Cột B:',
     options: {
@@ -299,7 +299,7 @@ export const INITIAL_QUESTIONS: Question[] = [
   },
   {
     id: 'q-mat-2',
-    lesson_id: 'l1111111-1111-1111-1111-111111111104',
+    lesson_id: 'b1111111-1111-1111-1111-111111111104',
     type: 'matching',
     content: 'Hãy ghép các đại lượng nhiệt học ở Cột A với công thức tương ứng ở Cột B:',
     options: {
