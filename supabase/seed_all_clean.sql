@@ -1,7 +1,6 @@
 -- ====================================================================
--- DATABASE SCHEMA: WEBSITE TRÒ CHƠI HỌC TẬP VẬT LÍ 12 (KẾT NỐI TRI THỨC)
--- Tác giả: Web Vật Lí Cô Quỳnh
--- Chuẩn hóa 100% PostgreSQL UUID Hexadecimal
+-- SCRIPT NẠP TOÀN BỘ CƠ SỞ DỮ LIỆU & CÂU HỎI VẬT LÍ 12 (KẾT NỐI TRI THỨC)
+-- Chạy toàn bộ script này trong Supabase SQL Editor (Tab mới)
 -- ====================================================================
 
 -- 1. BẬT TIỆN ÍCH UUID
@@ -13,7 +12,7 @@ DO $$ BEGIN CREATE TYPE question_type AS ENUM ('multiple_choice', 'true_false', 
 DO $$ BEGIN CREATE TYPE difficulty_level AS ENUM ('easy', 'medium', 'hard'); EXCEPTION WHEN duplicate_object THEN null; END $$;
 DO $$ BEGIN CREATE TYPE material_type AS ENUM ('pdf', 'slide', 'video', 'doc'); EXCEPTION WHEN duplicate_object THEN null; END $$;
 
--- 3. PROFILES TABLE (Gắn kết với Supabase Auth)
+-- 3. TẠO CÁC BẢNG NỀN TẢNG
 CREATE TABLE IF NOT EXISTS public.profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
     email TEXT NOT NULL,
@@ -28,7 +27,6 @@ CREATE TABLE IF NOT EXISTS public.profiles (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 4. CLASSES TABLE (Quản lý lớp học)
 CREATE TABLE IF NOT EXISTS public.classes (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name TEXT NOT NULL,
@@ -41,7 +39,6 @@ CREATE TABLE IF NOT EXISTS public.classes (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 5. CLASS MEMBERS TABLE (Học sinh trong lớp)
 CREATE TABLE IF NOT EXISTS public.class_members (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     class_id UUID NOT NULL REFERENCES public.classes(id) ON DELETE CASCADE,
@@ -51,7 +48,6 @@ CREATE TABLE IF NOT EXISTS public.class_members (
     UNIQUE(class_id, student_id)
 );
 
--- 6. CHAPTERS TABLE (4 Chương SGK Vật Lí 12 KNTT)
 CREATE TABLE IF NOT EXISTS public.chapters (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     number INTEGER NOT NULL UNIQUE,
@@ -62,7 +58,6 @@ CREATE TABLE IF NOT EXISTS public.chapters (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 7. LESSONS TABLE (Bài học trong từng Chương)
 CREATE TABLE IF NOT EXISTS public.lessons (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     chapter_id UUID NOT NULL REFERENCES public.chapters(id) ON DELETE CASCADE,
@@ -74,7 +69,6 @@ CREATE TABLE IF NOT EXISTS public.lessons (
     UNIQUE(chapter_id, number)
 );
 
--- 8. MATERIALS TABLE (Kho học liệu: PDF, Slide, Video...)
 CREATE TABLE IF NOT EXISTS public.materials (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     lesson_id UUID REFERENCES public.lessons(id) ON DELETE SET NULL,
@@ -87,7 +81,6 @@ CREATE TABLE IF NOT EXISTS public.materials (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 9. QUESTIONS TABLE (Ngân hàng câu hỏi 3 dạng)
 CREATE TABLE IF NOT EXISTS public.questions (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     lesson_id UUID REFERENCES public.lessons(id) ON DELETE SET NULL,
@@ -101,7 +94,6 @@ CREATE TABLE IF NOT EXISTS public.questions (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 10. GAME QUIZZES / SESSIONS (Bộ đề / Phòng trò chơi)
 CREATE TABLE IF NOT EXISTS public.game_quizzes (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     title TEXT NOT NULL,
@@ -116,7 +108,6 @@ CREATE TABLE IF NOT EXISTS public.game_quizzes (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 11. GAME QUIZ QUESTIONS (Liên kết câu hỏi vào Game)
 CREATE TABLE IF NOT EXISTS public.game_quiz_questions (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     quiz_id UUID NOT NULL REFERENCES public.game_quizzes(id) ON DELETE CASCADE,
@@ -125,7 +116,6 @@ CREATE TABLE IF NOT EXISTS public.game_quiz_questions (
     UNIQUE(quiz_id, question_id)
 );
 
--- 12. GAME ATTEMPTS (Lịch sử & Kết quả chơi của học sinh)
 CREATE TABLE IF NOT EXISTS public.game_attempts (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     quiz_id UUID REFERENCES public.game_quizzes(id) ON DELETE CASCADE,
@@ -140,7 +130,6 @@ CREATE TABLE IF NOT EXISTS public.game_attempts (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 13. BADGES TABLE (Huy hiệu vinh danh)
 CREATE TABLE IF NOT EXISTS public.badges (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     title TEXT NOT NULL,
@@ -158,7 +147,6 @@ CREATE TABLE IF NOT EXISTS public.user_badges (
     UNIQUE(user_id, badge_id)
 );
 
--- 14. EXPANDED GAMES SUITE (GAME-01 -> GAME-10)
 CREATE TABLE IF NOT EXISTS public.custom_games (
     id TEXT PRIMARY KEY,
     title TEXT NOT NULL,
@@ -205,7 +193,7 @@ CREATE TABLE IF NOT EXISTS public.game_ratings_feedback (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 15. ROW LEVEL SECURITY (RLS) POLICIES
+-- 4. BẬT ROW LEVEL SECURITY (RLS)
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.classes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.chapters ENABLE ROW LEVEL SECURITY;
@@ -233,7 +221,7 @@ DO $$ BEGIN CREATE POLICY "Xem custom games công khai" ON public.custom_games F
 DO $$ BEGIN CREATE POLICY "Xem custom attempts công khai" ON public.custom_game_attempts FOR SELECT USING (true); EXCEPTION WHEN duplicate_object THEN null; END $$;
 DO $$ BEGIN CREATE POLICY "Xem game feedback công khai" ON public.game_ratings_feedback FOR SELECT USING (true); EXCEPTION WHEN duplicate_object THEN null; END $$;
 
--- 16. BƯỚC 1: NẠP 4 CHƯƠNG TRƯỚC
+-- 5. BƯỚC 1: NẠP 4 CHƯƠNG TRƯỚC
 INSERT INTO public.chapters (id, number, title, description, icon, color) VALUES
 ('c1111111-1111-1111-1111-111111111111', 1, 'Chủ đề 1: Vật Lí Nhiệt', 'Mô hình cấu trúc chất, nội năng, định luật 1 NĐLH, nhiệt dung riêng, nhiệt nóng chảy và nhiệt hoá hơi.', 'Flame', 'from-amber-500 to-red-500'),
 ('c2222222-2222-2222-2222-222222222222', 2, 'Chủ đề 2: Khí Lí Tưởng', 'Mô hình động học phân tử chất khí, định luật Boyle, định luật Charles, phương trình trạng thái khí lí tưởng.', 'Wind', 'from-cyan-500 to-blue-500'),
@@ -241,7 +229,7 @@ INSERT INTO public.chapters (id, number, title, description, icon, color) VALUES
 ('c4444444-4444-4444-4444-444444444444', 4, 'Chủ đề 4: Vật Lí Hạt Nhân', 'Cấu tạo hạt nhân, năng lượng liên kết, phóng xạ hạt nhân, phản ứng phân hạch, nhiệt hạch và an toàn phóng xạ.', 'Atom', 'from-emerald-500 to-teal-600')
 ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, description = EXCLUDED.description;
 
--- 17. BƯỚC 2: NẠP TOÀN BỘ CÁC BÀI HỌC (Có đầy đủ b2222222-2222-2222-2222-222222222204)
+-- 6. BƯỚC 2: NẠP TOÀN BỘ CÁC BÀI HỌC (Để đảm bảo có đủ ID cho khóa ngoại)
 -- Chương 1
 INSERT INTO public.lessons (id, chapter_id, number, title, summary, key_formulas) VALUES
 ('b1111111-1111-1111-1111-111111111101', 'c1111111-1111-1111-1111-111111111111', 1, 'Bài 1: Cấu trúc của chất. Sự chuyển thể', 'Các thể của chất (rắn, lỏng, khí), mô hình động học phân tử, các quá trình chuyển thể.', '["Thể rắn: Phân tử dao động quanh VTCB"]'::jsonb),
@@ -271,7 +259,8 @@ INSERT INTO public.lessons (id, chapter_id, number, title, summary, key_formulas
 ('b4444444-4444-4444-4444-444444444402', 'c4444444-4444-4444-4444-444444444444', 20, 'Bài 20: Phóng xạ', 'Định luật phóng xạ, tia phóng xạ alpha, beta, gamma, chu kì bán rã.', '["N(t) = N_0 2^{-\\frac{t}{T}}"]'::jsonb)
 ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, summary = EXCLUDED.summary;
 
--- 18. BƯỚC 3: NẠP 16 CÂU HỎI 4 CHỦ ĐỀ CHUẨN ĐỘ KHÓ
+-- 7. BƯỚC 3: NẠP 16 CÂU HỎI 4 CHỦ ĐỀ CHUẨN ĐỘ KHÓ
+-- Xóa câu hỏi cũ nếu cần để nạp mới tinh:
 DELETE FROM public.questions WHERE lesson_id LIKE 'b%';
 
 -- Chủ đề 1: Vật Lí Nhiệt
