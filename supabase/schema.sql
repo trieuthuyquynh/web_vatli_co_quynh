@@ -326,30 +326,127 @@ INSERT INTO public.lessons (id, chapter_id, number, title, summary, key_formulas
 ('b4444444-4444-4444-4444-444444444402', 'c4444444-4444-4444-4444-444444444444', 20, 'Bài 20: Phóng xạ', 'Định luật phóng xạ, tia phóng xạ alpha, beta, gamma, chu kì bán rã.', '["N(t) = N_0 2^{-\\frac{t}{T}} = N_0 e^{-\\lambda t}", "\\lambda = \\frac{\\ln 2}{T}"]'::jsonb)
 ON CONFLICT (chapter_id, number) DO NOTHING;
 
--- Seed Real Question Bank (3 Dạng câu hỏi thực tế)
+-- Seed Real Question Bank (16 Câu hỏi chuẩn 4 Chủ đề SGK Vật Lí 12 KNTT phân bổ Nhận biết, Thông hiểu, Vận dụng)
 
--- 1. Dạng Trắc nghiệm 4 đáp án
+-- 1. CHỦ ĐỀ 1: VẬT LÍ NHIỆT
 INSERT INTO public.questions (lesson_id, type, content, options, correct_answer, explanation, difficulty) VALUES
-('b1111111-1111-1111-1111-111111111102', 'multiple_choice', 
-'Một lượng khí nhận nhiệt lượng $Q = 250\\text{ J}$ và dãn nở sinh công $A'' = 150\\text{ J}$ đẩy pit-tông lên. Theo định luật I nhiệt động lực học, độ biến thiên nội năng $\\Delta U$ của khối khí là bao nhiêu?',
-'["+400 J", "+100 J", "-100 J", "-400 J"]'::jsonb,
+('b1111111-1111-1111-1111-111111111101', 'multiple_choice',
+'Theo thuyết động học phân tử, các phân tử cấu tạo nên chất rắn có đặc điểm chuyển động nào sau đây?',
+'["Chuyển động tự do hỗn loạn hoàn toàn không có phương hướng xác định", "Dao động xung quanh các vị trí cân bằng cố định xác định", "Dao động xung quanh các vị trí cân bằng luôn luôn dịch chuyển", "Hoàn toàn đứng yên bất động ở mọi nhiệt độ"]'::jsonb,
 '"B"'::jsonb,
-'Theo quy ước dấu: Khí nhận nhiệt lượng nên $Q = +250\\text{ J}$. Khí sinh công $A'' = 150\\text{ J} \\Rightarrow$ công khí nhận là $A = -150\\text{ J}$. Áp dụng định luật 1: $\\Delta U = A + Q = -150 + 250 = +100\\text{ J}$.',
+'Theo mô hình động học phân tử (SGK Vật Lí 12 KNTT Bài 1): Ở thể rắn, lực tương tác giữa các phân tử rất mạnh, giữ cho các phân tử ở các vị trí xác định và chỉ dao động quanh các vị trí cân bằng cố định đó.',
+'easy'),
+
+('b1111111-1111-1111-1111-111111111104', 'multiple_choice',
+'Nhiệt dung riêng $c$ của một chất là đại lượng có ý nghĩa vật lí nào sau đây?',
+'["Nhiệt lượng cần truyền để 1 kg chất đó tăng thêm $1\\text{ K}$ (hoặc $1^\\circ\\text{C}$)", "Nhiệt lượng cần cung cấp để 1 kg chất đó nóng chảy hoàn toàn ở nhiệt độ nóng chảy", "Nhiệt lượng cần cung cấp để 1 kg chất đó hoá hơi hoàn toàn ở nhiệt độ sôi", "Nội năng toàn phần chứa trong 1 kg khối lượng của chất đó"]'::jsonb,
+'"A"'::jsonb,
+'Từ công thức $Q = mc\\Delta t \\Rightarrow c = \\frac{Q}{m\\Delta t}$. Nhiệt dung riêng $c$ (đơn vị $\\text{J}/(\\text{kg}\\cdot\\text{K})$) là nhiệt lượng cần thiết để làm cho 1 kg chất tăng thêm $1\\text{ K}$ (hoặc $1^\\circ\\text{C}$).',
+'medium'),
+
+('b1111111-1111-1111-1111-111111111102', 'multiple_choice',
+'Một khối khí lí tưởng trong xilanh nhận nhiệt lượng $Q = 350\\text{ J}$, đồng thời dãn nở đẩy pit-tông sinh công $A'' = 200\\text{ J}$. Độ biến thiên nội năng $\\Delta U$ của khối khí là:',
+'["+550 J", "+150 J", "-150 J", "-550 J"]'::jsonb,
+'"B"'::jsonb,
+'Theo định luật I NĐLH: $\\Delta U = A + Q$. Khối khí nhận nhiệt lượng nên $Q = +350\\text{ J}$. Khí sinh công $A'' = 200\\text{ J} \\Rightarrow$ công khí nhận là $A = -200\\text{ J}$. Do đó $\\Delta U = -200 + 350 = +150\\text{ J}$.',
+'hard'),
+
+('b1111111-1111-1111-1111-111111111104', 'multiple_choice',
+'Tính nhiệt lượng cần cung cấp để làm nóng chảy hoàn toàn $2\\text{ kg}$ nước đá ở $0^\\circ\\text{C}$, biết nhiệt nóng chảy riêng của nước đá là $\\lambda = 3.34 \\times 10^5\\text{ J/kg}$:',
+'["6.68 x 10^5 J", "3.34 x 10^5 J", "1.67 x 10^5 J", "6.68 x 10^4 J"]'::jsonb,
+'"A"'::jsonb,
+'Áp dụng công thức nhiệt nóng chảy: $Q = \\lambda m = (3.34 \\times 10^5\\text{ J/kg}) \\times 2\\text{ kg} = 6.68 \\times 10^5\\text{ J} = 668\\text{ kJ}$.',
+'hard');
+
+-- 2. CHỦ ĐỀ 2: KHÍ LÍ TƯỞNG
+INSERT INTO public.questions (lesson_id, type, content, options, correct_answer, explanation, difficulty) VALUES
+('b2222222-2222-2222-2222-222222222201', 'multiple_choice',
+'Trong mô hình động học phân tử chất khí lí tưởng, các phân tử khí được coi là:',
+'["Các chất điểm có thể tích riêng vô cùng lớn so với bình chứa", "Các chất điểm có khối lượng và chỉ tương tác với nhau khi va chạm", "Các hạt luôn luôn hút nhau với lực hấp dẫn rất mạnh ở khoảng cách xa", "Các vật rắn hình cầu đứng yên trong không gian bình chứa"]'::jsonb,
+'"B"'::jsonb,
+'Đặc điểm của khí lí tưởng: Các phân tử khí được coi là các chất điểm có khối lượng, chuyển động hỗn loạn không ngừng và chỉ tương tác với nhau khi va chạm đàn hồi.',
 'easy'),
 
 ('b2222222-2222-2222-2222-222222222202', 'multiple_choice',
-'Một khối khí lí tưởng xác định có thể tích $V_1 = 4\\text{ lít}$ ở áp suất $p_1 = 1\\text{ bar}$. Nếu nén đẳng nhiệt khối khí đến thể tích $V_2 = 2\\text{ lít}$ thì áp suất $p_2$ của khối khí là:',
-'["0.5 bar", "1.5 bar", "2.0 bar", "4.0 bar"]'::jsonb,
-'"C"'::jsonb,
-'Vì quá trình là đẳng nhiệt ($T = \\text{const}$), theo định luật Boyle ta có: $p_1 V_1 = p_2 V_2 \\Rightarrow p_2 = \\frac{p_1 V_1}{V_2} = \\frac{1 \\times 4}{2} = 2.0\\text{ bar}$.',
+'Trong quá trình biến đổi đẳng nhiệt của một khối lượng khí lí tưởng xác định, đồ thị biểu diễn mối quan hệ giữa áp suất $p$ và thể tích $V$ trong hệ tọa độ $(p, V)$ có dạng là:',
+'["Một đường thẳng đi qua gốc tọa độ O", "Một nhánh của đường hyperbol", "Một đường thẳng song song với trục hoành OV", "Một đường elip khép kín"]'::jsonb,
+'"B"'::jsonb,
+'Theo định luật Boyle: $p \\cdot V = \\text{const} \\Rightarrow p = \\frac{\\text{const}}{V}$. Mối quan hệ tỉ lệ nghịch này được biểu diễn bằng một nhánh đường hyperbol trên hệ trục $(p, V)$.',
+'medium'),
+
+('b2222222-2222-2222-2222-222222222202', 'multiple_choice',
+'Một khối khí lí tưởng có thể tích $V_1 = 6\\text{ lít}$ ở áp suất $p_1 = 1.5\\text{ bar}$. Nếu nén đẳng nhiệt khối khí đến thể tích $V_2 = 2\\text{ lít}$ thì áp suất $p_2$ của khí trong bình là:',
+'["4.5 bar", "3.0 bar", "0.5 bar", "2.25 bar"]'::jsonb,
+'"A"'::jsonb,
+'Áp dụng định luật Boyle cho quá trình đẳng nhiệt: $p_1 V_1 = p_2 V_2 \\Rightarrow p_2 = \\frac{p_1 V_1}{V_2} = \\frac{1.5 \\times 6}{2} = 4.5\\text{ bar}$.',
+'hard'),
+
+('b2222222-2222-2222-2222-222222222204', 'multiple_choice',
+'Tính thể tích $V$ của $1\\text{ mol}$ khí lí tưởng ở điều kiện tiêu chuẩn nhiệt độ $T = 273.15\\text{ K}$ ($0^\\circ\\text{C}$) và áp suất $p = 10^5\\text{ Pa}$, lấy $R = 8.314\\text{ J/mol.K}$:',
+'["22.71 lít (0.02271 m³)", "24.79 lít (0.02479 m³)", "22.40 lít (0.02240 m³)", "18.50 lít (0.01850 m³)"]'::jsonb,
+'"A"'::jsonb,
+'Theo phương trình Clapeyron - Mendeleev: $pV = nRT \\Rightarrow V = \\frac{nRT}{p} = \\frac{1 \\times 8.314 \\times 273.15}{10^5} \\approx 0.02271\\text{ m}^3 = 22.71\\text{ lít}$. (Theo chuẩn IUPAC mới áp suất $1\\text{ bar} = 10^5\\text{ Pa}$).',
+'hard');
+
+-- 3. CHỦ ĐỀ 3: TỪ TRƯỜNG
+INSERT INTO public.questions (lesson_id, type, content, options, correct_answer, explanation, difficulty) VALUES
+('b3333333-3333-3333-3333-333333333301', 'multiple_choice',
+'Đường sức từ của một nam châm thẳng bên ngoài thanh nam châm có quy ước chiều như thế nào?',
+'["Đi vào từ cực Bắc (N) và đi ra ở cực Nam (S)", "Đi vào từ cực Nam (S) và đi ra ở cực Bắc (N)", "Đi từ tâm nam châm tỏa đều ra vô cực", "Đều hướng vuông góc với trục của thanh nam châm"]'::jsonb,
+'"B"'::jsonb,
+'Quy ước chiều của đường sức từ bên ngoài nam châm: "Vào Nam (S) - Ra Bắc (N)". Bên trong lòng nam châm thì đi từ cực Nam sang cực Bắc tạo thành đường cong khép kín.',
+'easy'),
+
+('b3333333-3333-3333-3333-333333333302', 'multiple_choice',
+'Để xác định chiều của lực từ $\\vec{F}$ tác dụng lên một đoạn dây dẫn mang dòng điện đặt trong từ trường đều, ta sử dụng quy tắc nào sau đây?',
+'["Quy tắc bàn tay phải", "Quy tắc bàn tay trái", "Quy tắc cái đinh ốc", "Quy tắc nắm tay phải"]'::jsonb,
+'"B"'::jsonb,
+'Quy tắc bàn tay trái: Đặt bàn tay trái sao cho các đường sức từ hướng vào lòng bàn tay, chiều từ cổ tay đến ngón giữa là chiều dòng điện thì ngón cái choãi ra $90^\\circ$ chỉ chiều của lực từ.',
+'medium'),
+
+('b3333333-3333-3333-3333-333333333302', 'multiple_choice',
+'Một đoạn dây dẫn thẳng dài $L = 0.5\\text{ m}$ mang dòng điện $I = 4\\text{ A}$ đặt vuông góc với vectơ cảm ứng từ của từ trường đều có độ lớn $B = 0.25\\text{ T}$. Độ lớn lực từ tác dụng lên đoạn dây là:',
+'["0.5 N", "0.25 N", "1.0 N", "0.1 N"]'::jsonb,
+'"A"'::jsonb,
+'Áp dụng công thức lực từ Laplace: $F = BIL\\sin\\alpha = 0.25 \\times 4 \\times 0.5 \\times \\sin(90^\\circ) = 0.5\\text{ N}$.',
+'hard'),
+
+('b3333333-3333-3333-3333-333333333303', 'multiple_choice',
+'Một khung dây phẳng có diện tích $S = 20\\text{ cm}^2$ ($2 \\times 10^{-3}\\text{ m}^2$) đặt trong từ trường đều có $B = 0.05\\text{ T}$. Từ thông cực đại $\\Phi_0$ gửi qua khung dây khi mặt phẳng khung vuông góc với đường sức từ là:',
+'["1.0 x 10^-4 Wb", "2.0 x 10^-4 Wb", "4.0 x 10^-4 Wb", "1.0 x 10^-3 Wb"]'::jsonb,
+'"A"'::jsonb,
+'Khi mặt phẳng khung vuông góc với đường sức từ thì góc giữa pháp tuyến $\\vec{n}$ và $\\vec{B}$ là $\\alpha = 0^\\circ \\Rightarrow \\cos(0^\\circ) = 1$. Ta có $\\Phi = BS\\cos(0^\\circ) = 0.05 \\times (2 \\times 10^{-3}) = 1.0 \\times 10^{-4}\\text{ Wb}$.',
+'hard');
+
+-- 4. CHỦ ĐỀ 4: VẬT LÍ HẠT NHÂN
+INSERT INTO public.questions (lesson_id, type, content, options, correct_answer, explanation, difficulty) VALUES
+('b4444444-4444-4444-4444-444444444401', 'multiple_choice',
+'Hạt nhân nguyên tử $^{238}_{92}\\text{U}$ có cấu tạo gồm bao nhiêu hạt proton và bao nhiêu hạt neutron?',
+'["92 proton và 146 neutron", "92 proton và 238 neutron", "146 proton và 92 neutron", "238 proton và 92 neutron"]'::jsonb,
+'"A"'::jsonb,
+'Kí hiệu hạt nhân $^A_Z\\text{X}$: Số proton là $Z = 92$, số khối là $A = 238$. Số neutron là $N = A - Z = 238 - 92 = 146\\text{ neutron}$.',
 'easy'),
 
 ('b4444444-4444-4444-4444-444444444401', 'multiple_choice',
-'Đại lượng đặc trưng cho mức độ bền vững của một hạt nhân nguyên tử là:',
-'["Năng lượng liên kết", "Năng lượng liên kết riêng", "Độ hụt khối", "Số khối A"]'::jsonb,
-'"B"'::jsonb,
-'Năng lượng liên kết riêng $\\epsilon = \\frac{W_{lk}}{A}$ (năng lượng liên kết tính trên một nucleon) là đại lượng đặc trưng cho độ bền vững của hạt nhân. Hạt nhân có $\\epsilon$ càng lớn thì càng bền vững (bền nhất ở khoảng $A \\in [50, 70]$).',
-'medium');
+'Đại lượng nào sau đây quyết định trực tiếp mức độ bền vững của một hạt nhân nguyên tử?',
+'["Năng lượng liên kết riêng $W_{lkr} = \\frac{W_{lk}}{A}$", "Năng lượng liên kết toàn phần $W_{lk}$", "Khối lượng toàn phần của hạt nhân $m_X$", "Độ hụt khối toàn phần $\\Delta m$"]'::jsonb,
+'"A"'::jsonb,
+'Năng lượng liên kết riêng $W_{lkr} = \\frac{W_{lk}}{A}$ (tính trên 1 nucleon) là đại lượng đặc trưng cho độ bền vững của hạt nhân. Hạt nhân có năng lượng liên kết riêng càng lớn thì càng bền vững (bền vững nhất ở các hạt nhân có $A$ từ $50$ đến $70$).',
+'medium'),
+
+('b4444444-4444-4444-4444-444444444402', 'multiple_choice',
+'Chất phóng xạ Radon $^{222}_{86}\\text{Rn}$ có chu kì bán rã $T = 3.8\\text{ ngày}$. Sau thời gian $t = 11.4\\text{ ngày}$, tỉ lệ phần trăm số hạt nhân Radon còn lại chưa bị phân rã là:',
+'["12.5%", "25.0%", "50.0%", "6.25%"]'::jsonb,
+'"A"'::jsonb,
+'Số chu kì bán rã đã trôi qua là $k = \\frac{t}{T} = \\frac{11.4}{3.8} = 3$. Theo định luật phóng xạ: $\\frac{N(t)}{N_0} = 2^{-k} = 2^{-3} = \\frac{1}{8} = 12.5\\%$.',
+'hard'),
+
+('b4444444-4444-4444-4444-444444444401', 'multiple_choice',
+'Biết độ hụt khối của hạt nhân Heli $^4_2\\text{He}$ là $\\Delta m = 0.0304\\text{ amu}$. Lấy $1\\text{ amu} \\cdot c^2 \\approx 931.5\\text{ MeV}$. Năng lượng liên kết riêng của hạt nhân Heli là:',
+'["7.08 MeV/nucleon", "28.32 MeV/nucleon", "14.16 MeV/nucleon", "3.54 MeV/nucleon"]'::jsonb,
+'"A"'::jsonb,
+'Năng lượng liên kết toàn phần: $W_{lk} = \\Delta m \\cdot c^2 = 0.0304 \\times 931.5 \\approx 28.318\\text{ MeV}$. Số khối $A = 4$. Suy ra năng lượng liên kết riêng $W_{lkr} = \\frac{W_{lk}}{4} = \\frac{28.318}{4} \\approx 7.08\\text{ MeV/nucleon}$.',
+'hard');
 
 -- 2. Dạng Đúng / Sai 4 ý chuẩn THPT
 INSERT INTO public.questions (lesson_id, type, content, options, correct_answer, explanation, difficulty) VALUES
